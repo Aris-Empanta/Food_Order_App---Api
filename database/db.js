@@ -1,3 +1,4 @@
+//The configurations to connect to mysql database
 const mysql = require('mysql2')
 
 const connection = mysql.createConnection({

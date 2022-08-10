@@ -5,11 +5,12 @@ const cors = require("cors")
 const db = require('./database/db')
 const multer = require("multer")
 
+//The middlewares needed to exchange data with frontend.
 app.use(cors())
 app.use(express.urlencoded({extended: true}));
 app.use(express.json())
 
-
+//The multer object configurations to accept files
 const storage = multer.diskStorage({
       destination: (req, file, cb) => {
         cb(null, "uploads")
@@ -18,6 +19,8 @@ const storage = multer.diskStorage({
         cb(null, Date.now() + "-" + file.originalname)
       }
 })
+
+//db.query("DELETE FROM Products", (error) => console.log(error))
 
 const upload = multer({storage: storage})
 
@@ -33,6 +36,7 @@ app.get("/", (req, res) => {
     })
 })
 
+//The post endpoint to accept new product data
 app.post("/products", upload.single("image"),  (req, res) => {
     
 
