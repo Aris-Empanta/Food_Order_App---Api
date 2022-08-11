@@ -5,10 +5,12 @@ const cors = require("cors")
 const db = require('./database/db')
 const multer = require("multer")
 
+
 //The middlewares needed to exchange data with frontend.
 app.use(cors())
 app.use(express.urlencoded({extended: true}));
 app.use(express.json())
+app.use("/images", express.static("uploads"))
 
 //The multer object configurations to accept files
 const storage = multer.diskStorage({
@@ -21,33 +23,16 @@ const storage = multer.diskStorage({
 })
 
 //db.query("DELETE FROM Products", (error) => console.log(error))
-db.query(`CREATE TABLE Products (
-  Category varchar(255) NOT NULL,
-  Name varchar(255) NOT NULL,
-  Currency varchar(255) NOT NULL,
-  Quantity int NOT NULL,
-  Delivery_price int NOT NULL,
-  Take_away_price int NOT NULL,
-  Description varchar(255) NOT NULL,
-  Date_created int NOT NULL
-);` , (error) => console.log(error))
 
-/*`CREATE TABLE Products (
-  Category varchar(255) NOT NULL,
-  Name varchar(255) NOT NULL,
-  Currency varchar(255) NOT NULL,
-  Quantity int NOT NULL,
-  Delivery_price int NOT NULL,
-  Take_away_price int NOT NULL,
-  Description varchar(255) NOT NULL,
-  Date_created int NOT NULL,
-);`*/
+db.query(`ALTER TABLE Products
+          ADD COLUMN Image_name TEXT`, (error) => console.log(error))
 
 const upload = multer({storage: storage})
 
-app.get("/", (req, res) => {
+//The products' info
+app.get("/products", (req, res) => {
     
-    let sql = "SELECT * FROM food"
+    let sql = "SELECT * FROM Products"
 
     db.query(sql, (err, rows) => {
       if(err){
@@ -56,6 +41,8 @@ app.get("/", (req, res) => {
       res.send(rows)
     })
 })
+
+
 
 //The post endpoint to accept new product data
 app.post("/products", upload.single("image"),  (req, res) => {
