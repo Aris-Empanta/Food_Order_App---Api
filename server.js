@@ -21,6 +21,27 @@ const storage = multer.diskStorage({
 })
 
 //db.query("DELETE FROM Products", (error) => console.log(error))
+db.query(`CREATE TABLE Products (
+  Category varchar(255) NOT NULL,
+  Name varchar(255) NOT NULL,
+  Currency varchar(255) NOT NULL,
+  Quantity int NOT NULL,
+  Delivery_price int NOT NULL,
+  Take_away_price int NOT NULL,
+  Description varchar(255) NOT NULL,
+  Date_created int NOT NULL
+);` , (error) => console.log(error))
+
+/*`CREATE TABLE Products (
+  Category varchar(255) NOT NULL,
+  Name varchar(255) NOT NULL,
+  Currency varchar(255) NOT NULL,
+  Quantity int NOT NULL,
+  Delivery_price int NOT NULL,
+  Take_away_price int NOT NULL,
+  Description varchar(255) NOT NULL,
+  Date_created int NOT NULL,
+);`*/
 
 const upload = multer({storage: storage})
 
@@ -47,19 +68,23 @@ app.post("/products", upload.single("image"),  (req, res) => {
     let deliveryPrice = req.body.deliveryPrice
     let takeAwayPrice = req.body.takeAwayPrice
     let description = req.body.description
-    let image = req.body.image
+    
+    let date = new Date()
+        date = date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear() +
+               "_" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
    
     console.log(req.file, req.body)
     let sql = `INSERT INTO Products 
                VALUES (?, ?, ?, ?, ?, ?,  ?, ?)`
 
-    db.query(sql,[category, name, currency, quantity, deliveryPrice, takeAwayPrice, description, image ] , (err, rows) => {
+    db.query(sql,[category, name, currency, quantity, deliveryPrice, takeAwayPrice, description, date ] , (err, rows) => {
       if(err){
         console.log(err)
       } else{
-        res.send(rows)
+        console.log(rows)
       }
     })
 })
+
 
 app.listen(port, () => console.log(`App is listening on port ${port}`))
