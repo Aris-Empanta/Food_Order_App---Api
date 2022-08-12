@@ -19,6 +19,7 @@ const storage = multer.diskStorage({
       },
       filename: (req, file, cb) => {
         cb(null, file.originalname)
+        
       }
 })
 
@@ -33,9 +34,6 @@ app.get("/products", (req, res) => {
     let sql = "SELECT * FROM Products"
 
     db.query(sql, (err, rows) => {
-      if(err){
-        console.log(err)
-      }
       res.send(rows)
     })
 })
@@ -53,22 +51,18 @@ app.post("/products", upload.single("image"),  (req, res) => {
     let deliveryPrice = req.body.deliveryPrice
     let takeAwayPrice = req.body.takeAwayPrice
     let description = req.body.description
-    let imageName = "http://localhost:5000/images/" +  req.body.imageName
-    
+    let image = "http://localhost:5000/images/" + req.body.imageName    
     let date = new Date()
         date = date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear() +
                "_" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
-   
-    console.log(req.file, req.body)
+
     let sql = `INSERT INTO Products 
                VALUES (?, ?, ?, ?, ?, ?,  ?, ?, ?)`
 
-    db.query(sql,[category, name, currency, quantity, deliveryPrice, takeAwayPrice, description, date, imageName ] , (err, rows) => {
+    db.query(sql,[category, name, currency, quantity, deliveryPrice, takeAwayPrice, description, date, image ] , (err, rows) => {
       if(err){
         console.log(err)
-      } else{
-        console.log(rows)
-      }
+      } 
     })
 })
 
