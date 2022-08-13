@@ -26,7 +26,13 @@ const storage = multer.diskStorage({
 //db.query("DELETE FROM Products", (error) => console.log(error))
 
 
-const upload = multer({storage: storage})
+const upload = multer({storage: storage,
+                      fileFilter: (req, file, cb) => {
+                        if(file.mimetype !=="image/jpeg" || file.mimetype !=="image/png"){
+                          return cb(new Error("Non-supported file type!"), false)
+                        } 
+                          cb(null, true)
+                      }})
 
 //The products' info
 app.get("/products", (req, res) => {
