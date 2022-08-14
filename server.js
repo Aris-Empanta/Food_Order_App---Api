@@ -23,16 +23,10 @@ const storage = multer.diskStorage({
       }
 })
 
-//db.query("DELETE FROM Products", (error) => console.log(error))
+db.query("DELETE FROM Products", (error) => console.log(error))
 
-
-const upload = multer({storage: storage,
-                      fileFilter: (req, file, cb) => {
-                        if(file.mimetype !=="image/jpeg" || file.mimetype !=="image/png"){
-                          return cb(new Error("Non-supported file type!"), false)
-                        } 
-                          cb(null, true)
-                      }})
+//Restricting non-image files or large images also  here for extra safety
+const upload = multer({storage: storage})
 
 //The products' info
 app.get("/products", (req, res) => {
@@ -47,8 +41,7 @@ app.get("/products", (req, res) => {
 
 
 //The post endpoint to accept new product data
-app.post("/products", upload.single("image"),  (req, res) => {
-    
+app.post("/products", upload.single("image"),  (req, res) => {    
 
     let category = req.body.category
     let name = req.body.name
@@ -66,11 +59,11 @@ app.post("/products", upload.single("image"),  (req, res) => {
                VALUES (?, ?, ?, ?, ?, ?,  ?, ?, ?)`
 
     db.query(sql,[category, name, currency, quantity, deliveryPrice, takeAwayPrice, description, date, image ] , (err, rows) => {
-      if(err){
+      /*if(err){
         console.log(err)
-      } 
+      } */
     })
+    console.log(image)
 })
-
 
 app.listen(port, () => console.log(`App is listening on port ${port}`))
