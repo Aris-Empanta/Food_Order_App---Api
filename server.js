@@ -23,7 +23,7 @@ const storage = multer.diskStorage({
       }
 })
 
-db.query("DELETE FROM Products", (error) => console.log(error))
+//db.query("DELETE FROM Products", (error) => console.log(error))
 
 //Restricting non-image files or large images also  here for extra safety
 const upload = multer({storage: storage})
@@ -45,6 +45,7 @@ app.post("/products", upload.single("image"),  (req, res) => {
 
     let category = req.body.category
     let name = req.body.name
+    let id = req.body.id
     let currency = req.body.currency
     let quantity = req.body.quantity
     let deliveryPrice = req.body.deliveryPrice
@@ -56,14 +57,26 @@ app.post("/products", upload.single("image"),  (req, res) => {
                "_" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
 
     let sql = `INSERT INTO Products 
-               VALUES (?, ?, ?, ?, ?, ?,  ?, ?, ?)`
+               VALUES (?, ?, ?, ?, ?, ?,  ?, ?, ?, ?)`
 
-    db.query(sql,[category, name, currency, quantity, deliveryPrice, takeAwayPrice, description, date, image ] , (err, rows) => {
+    db.query(sql,[category, name, currency, quantity, deliveryPrice, takeAwayPrice, description, date, image, id ] , (err, rows) => {
       /*if(err){
         console.log(err)
       } */
     })
-    console.log(image)
+    
+})
+
+app.put("/products", (req, res) => {
+  let name = req.body.name
+  let deliveryPrice = req.body.deliveryPrice
+  let takeAwayPrice = req.body.takeAwayPrice
+  let currency = req.body.currency
+  let description = req.body.description
+  let id = req.body.id
+
+  console.log(id, name, deliveryPrice, takeAwayPrice, currency, description)
+
 })
 
 app.listen(port, () => console.log(`App is listening on port ${port}`))
