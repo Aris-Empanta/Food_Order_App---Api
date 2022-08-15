@@ -4,6 +4,14 @@ const port = process.env.PORT || 5000
 const cors = require("cors")
 const db = require('./database/db')
 const multer = require("multer")
+const fs = require("fs")
+
+
+
+/*fs.unlink("uploads/1660522459947-288446437_720777922505658_2553761386851716110_n.jpg", function (err) {
+  if (err) throw err;
+  console.log('File deleted!');
+})*/
 
 
 //The middlewares needed to exchange data with frontend.
@@ -27,6 +35,34 @@ const storage = multer.diskStorage({
 
 //Restricting non-image files or large images also  here for extra safety
 const upload = multer({storage: storage})
+
+app.post("/products/:id", upload.single("newImage"), (req, res) => {
+
+        let newImage = "http://localhost:5000/images/" + req.file.filename
+
+        let fetchImage = `SELECT * FROM Products WHERE ID=${req.params.id}`
+        let oldImage
+
+        console.log(newImage)
+
+        //Fetching the old image name to delete the image file
+        db.query(fetchImage, (err, rows) => {
+          if (err) throw err;
+          oldImage = rows[0]["Image_name"].split("http://localhost:5000/images/")
+          
+          fs.unlink("uploads/" + oldImage[1], (err) => {
+            if (err) throw err;
+            console.log('Image deleted!');
+          })
+        })
+        
+        let updateImage = `UPDATE products SET Image_name = ?                                              
+                                           WHERE ID = ?`
+        db.query(updateImage, [newImage, req.params.id], (err) => {
+                                                                    if (err) throw err;
+                                                                    console.log('Image updated!');
+                                                                  })        
+    })
 
 //The products' info
 app.get("/products", (req, res) => {
@@ -60,9 +96,9 @@ app.post("/products", upload.single("image"),  (req, res) => {
                VALUES (?, ?, ?, ?, ?, ?,  ?, ?, ?, ?)`
 
     db.query(sql,[category, name, currency, quantity, deliveryPrice, takeAwayPrice, description, date, image, id ] , (err, rows) => {
-      /*if(err){
+      if(err){
         console.log(err)
-      } */
+      } 
     })
     
 })
@@ -75,7 +111,23 @@ app.put("/products", (req, res) => {
   let description = req.body.description
   let id = req.body.id
 
-  console.log(id, name, deliveryPrice, takeAwayPrice, currency, description)
+  sql = `UPDATE products SET Name = ?,
+                             Delivery_price = ?,
+                             Take_away_price = ?,
+                             Currency = ?,
+                             Description = ? 
+                         WHERE id = ?`
+
+  db.query(sql,
+           [name, deliveryPrice, takeAwayPrice, currency, description, id ],
+           (err, result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.send(result);
+            }
+          }
+        )
 
 })
 
