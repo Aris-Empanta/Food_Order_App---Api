@@ -6,9 +6,7 @@ const fs = require("fs")
 
 router.use("/images", express.static("uploads"))
 
-//db.query("DELETE FROM Products", (error) => console.log(error))
-
-//The multer object configurations to accept files
+//------> The multer object configurations to accept files <------
 const storage = multer.diskStorage({
       destination: (req, file, cb) => {
         cb(null, "uploads")
@@ -19,11 +17,9 @@ const storage = multer.diskStorage({
       }
 })
 
-
 const upload = multer({storage: storage})
 
-
-//The products' info api endpoint
+//------> The products' info api endpoint <------
 router.get("/", (req, res) => {
     
     let sql = "SELECT * FROM Products"
@@ -33,7 +29,7 @@ router.get("/", (req, res) => {
     })
 })
 
-//The post endpoint to accept new product data
+//------> The post endpoint to accept new product data <------
 router.post("/add/:id", upload.single("image"),  (req, res) => {    
 
     let id = req.params.id
@@ -60,11 +56,16 @@ router.post("/add/:id", upload.single("image"),  (req, res) => {
     
 })
 
-//The api endpoint to change a product's image
+//------> The api endpoint to change a product's image <------
 router.post("/update-image/:id", upload.single("newImage"), (req, res) => {
 
   let newImage = "http://localhost:5000/products/images/" + req.file.filename
   let id = req.params.id
+  let date = new Date()
+  date = date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear() +
+         "_" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
+
+
   let fetchImage = `SELECT * FROM Products WHERE ID=${id}`
   let oldImage
 
@@ -79,33 +80,38 @@ router.post("/update-image/:id", upload.single("newImage"), (req, res) => {
     })
   })
   
-  let updateImage = `UPDATE products SET Image_name = ?                                              
+  let updateImage = `UPDATE products SET Date = ?, 
+                                         Image_name = ?                                              
                                      WHERE ID = ?`
-  db.query(updateImage, [newImage, id], (err) => {
+  db.query(updateImage, [date, newImage, id], (err) => {
                                                               if (err) throw err;
                                                               console.log('Image updated!');
                                                             })        
 })
 
-/*The api endpoint to modify the product's info */
+//------> The api endpoint to modify the product's info <------
 router.put("/update-characteristics/:id", (req, res) => {
 
   let id = req.params.id
+  let date = req.body.date
   let name = req.body.name
   let deliveryPrice = req.body.deliveryPrice
   let takeAwayPrice = req.body.takeAwayPrice
   let currency = req.body.currency
   let description = req.body.description  
 
-  sql = `UPDATE products SET Name = ?,
+
+
+  sql = `UPDATE products SET Date = ?,
+                             Name = ?,
                              Delivery_price = ?,
                              Take_away_price = ?,
                              Currency = ?,
-                             Description = ? 
+                             Description = ?                            
                          WHERE id = ?`
 
   db.query(sql,
-           [name, deliveryPrice, takeAwayPrice, currency, description, id ],
+           [date, name, deliveryPrice, takeAwayPrice, currency, description, id ],
            (err, result) => {
             if (err) {
               console.log(err);
@@ -115,9 +121,10 @@ router.put("/update-characteristics/:id", (req, res) => {
           }
         )
 
+
 })
 
-//The api endpoint to delete a product
+//------> The api endpoint to delete a product <------
 router.delete("/delete-product/:id", (req, res) => {
 
    let id = req.params.id
