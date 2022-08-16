@@ -64,8 +64,8 @@ router.post("/add/:id", upload.single("image"),  (req, res) => {
 router.post("/update-image/:id", upload.single("newImage"), (req, res) => {
 
   let newImage = "http://localhost:5000/products/images/" + req.file.filename
-
-  let fetchImage = `SELECT * FROM Products WHERE ID=${req.params.id}`
+  let id = req.params.id
+  let fetchImage = `SELECT * FROM Products WHERE ID=${id}`
   let oldImage
 
   //Fetching the old image name to delete the image file
@@ -81,7 +81,7 @@ router.post("/update-image/:id", upload.single("newImage"), (req, res) => {
   
   let updateImage = `UPDATE products SET Image_name = ?                                              
                                      WHERE ID = ?`
-  db.query(updateImage, [newImage, req.params.id], (err) => {
+  db.query(updateImage, [newImage, id], (err) => {
                                                               if (err) throw err;
                                                               console.log('Image updated!');
                                                             })        
@@ -115,6 +115,33 @@ router.put("/update-characteristics/:id", (req, res) => {
           }
         )
 
+})
+
+//The api endpoint to delete a product
+router.delete("/delete-product/:id", (req, res) => {
+
+   let id = req.params.id
+   let fetchImage = `SELECT * FROM products WHERE ID=${id}`
+   let image
+ 
+   //Fetching the old image name to delete the image file
+   db.query(fetchImage, (err, rows) => {
+     if (err) throw err;
+     image = rows[0]["Image_name"].split("http://localhost:5000/products/images/")
+          
+     fs.unlink("uploads/" + image[1], (err) => {
+       if (err) throw err;
+       console.log('Image deleted!');
+     })
+   })
+   
+   //Now we delete the whole product's data
+   let deleteProduct = `DELETE FROM products WHERE ID = ${id}`
+
+   db.query(deleteProduct, (err, rows) => {
+    if (err) throw err;
+    console.log("Product deleted")
+   })
 })
 
 module.exports = router
