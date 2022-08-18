@@ -22,11 +22,35 @@ const upload = multer({storage: storage})
 //------> The products' info api endpoint <------
 router.get("/", (req, res) => {
     
-    let sql = "SELECT * FROM Products"
+    let products = "SELECT * FROM Products"
 
-    db.query(sql, (err, rows) => {
+    db.query(products, (err, rows) => {
       res.send(rows)
     })
+
+})
+
+//------> The products' categories api endpoint <------
+router.get("/categories", (req, res) => {
+    
+  let products = "SELECT * FROM Products GROUP BY Category"
+
+  db.query(products, (err, rows) => {
+    res.send(rows.map(item => item.Category))
+  })
+
+})
+
+//------> The products' by desired category api endpoint <------
+router.get("/by-category/:category", (req, res) => {
+  
+  let category = req.params.category
+  let products = "SELECT * FROM Products WHERE Category = " + db.escape(category)
+
+  db.query(products, (err, rows) => {
+    res.send(rows)
+  })
+
 })
 
 //------> The post endpoint to accept new product data <------
