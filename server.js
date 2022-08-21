@@ -6,7 +6,12 @@ const http = require('http')
 const server = http.createServer(app)
 const { Server } = require('socket.io')
 //The socket.io server instance attached to an instance of http.Server.
-const io = new Server(server)
+const io = new Server(server, {
+                                cors: {
+                                origin: "*",
+                                methods: ["GET", "POST"],
+                                }
+                            })
 const port = process.env.PORT || 5000
 const cors = require("cors")
 
@@ -19,12 +24,16 @@ app.use(express.json())
  The first argument is the event. The second is the event handler.
  The argument socket represents the client object.*/
 io.on('connection', (socket) => {
-    socket.on('connection', () => console.log('hi user'))
-    socket.on('message', () => console.log('received'))
+    io.emit('message', 'hello user')
+
+    socket.on("chat message", (msg) => {
+        io.emit("chat message", msg)
+    })
 })
 
 //Importing routes
 const productsRoute = require("./routes/products")
+const { Socket } = require("dgram")
 
 app.use('/products', productsRoute)
 
