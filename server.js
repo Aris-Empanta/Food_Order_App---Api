@@ -24,16 +24,15 @@ app.use(express.json())
  The first argument is the event. The second is the event handler.
  The argument socket represents the client object.*/
 io.on('connection', (socket) => {
-    io.emit('message', 'hello user')
 
-    socket.on("chat message", (msg) => {
-        io.emit("chat message", msg)
-    })
+     socket.on("room", (room) => {   
+        socket.join(room)
+        
+     })
 })
 
 //Importing routes
 const productsRoute = require("./routes/products")
-const { Socket } = require("dgram")
 
 app.use('/products', productsRoute)
 
