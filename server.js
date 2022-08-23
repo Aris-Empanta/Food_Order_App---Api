@@ -1,12 +1,9 @@
 const express = require("express")
 const app = express()
 //Creating a new server for socket.io with express
-const http = require('http')
-//We create an http server
-const server = http.createServer(app)
-const { Server } = require('socket.io')
+const server = require('http').createServer(app)
 //The socket.io server instance attached to an instance of http.Server.
-const io = new Server(server, {
+const io = require('socket.io')(server, {
                                 cors: {
                                 origin: "*",
                                 methods: ["GET", "POST"],
@@ -20,16 +17,25 @@ app.use(cors())
 app.use(express.urlencoded({extended: true}));
 app.use(express.json())
 
-/*With the ".on", the io server or the client object can listen for events. 
- The first argument is the event. The second is the event handler.
- The argument socket represents the client object.*/
+
+
+
+
 io.on('connection', (socket) => {
 
-     socket.on("room", (room) => {   
-        socket.join(room)
-        
-     })
+   socket.on('chat message', (data) => {
+         room = data.username
+         message = data.message
+         //Customer enters the room with his name
+         socket.join(room)
+         //Sending message and data to admin. Admin receives the message and joins customer's room
+         io.emit('sendToAdmin', data)
+         socket.on("joinRoom", (room) => socket.join(room))
+         io.to(room).emit('chat message', message)
+   })
 })
+
+
 
 //Importing routes
 const productsRoute = require("./routes/products")
