@@ -54,8 +54,7 @@ io.on('connection', (socket) => {
 
          let name = data.username
          let message = data.message
-         
-         io.emit('customer '+ name, message)
+         io.emit('customer ' + name, message)
    })  
 })
 
