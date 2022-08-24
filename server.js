@@ -53,8 +53,10 @@ io.on('connection', (socket) => {
    socket.on('chat message', (data) => {
 
          let name = data.username
+         let sender = data.sender
          let message = data.message
-         io.emit('customer ' + name, message)
+         io.emit('customer ' + name, { message: message,
+                                       sender: sender})
    })  
 })
 
