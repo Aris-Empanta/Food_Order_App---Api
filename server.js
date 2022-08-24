@@ -11,31 +11,58 @@ const io = require('socket.io')(server, {
                             })
 const port = process.env.PORT || 5000
 const cors = require("cors")
+const db = require('./database/db')
 
 //The middlewares needed to exchange data with frontend.
 app.use(cors())
 app.use(express.urlencoded({extended: true}));
 app.use(express.json())
 
+//------> Inserting messages and sender's name to the database. <------
+app.post('/chat-messages', (req, res) => {
+      let message = req.body.message 
+      let name = req.body.username
 
-
-
-
-io.on('connection', (socket) => {
-
-   socket.on('chat message', (data) => {
-         room = data.username
-         message = data.message
-         //Customer enters the room with his name
-         socket.join(room)
-         //Sending message and data to admin. Admin receives the message and joins customer's room
-         io.emit('sendToAdmin', data)
-         socket.on("joinRoom", (room) => socket.join(room))
-         io.to(room).emit('chat message', message)
-   })
+      db.query(`INSERT INTO chat_messages
+                VALUES (?,?)`, [name, message])
 })
 
 
+//------> Fetching all customer's name <------
+
+app.get('/chat-messages/customers', (req, res) => {
+
+      db.query("SELECT * FROM chat_messages GROUP BY Name", (err, rows) => {
+            res.send(rows)
+        })
+})
+
+//------> Fetching all messages and sender's name from the database <------
+app.get('/chat-messages', (req, res) => {
+      db.query(`SELECT * FROM chat_messages `, (err, rows) => {
+                res.send(rows)
+            })
+})
+
+//db.query(`DELETE FROM chat_messages`)
+
+//------> Socket.io configurations. <------
+io.on('connection', (socket) => {   
+    
+   
+   socket.on('chat message', (data) => {
+
+         let name = data.username
+         let message = data.message
+         
+         io.emit('customer '+ name, message)
+   })  
+})
+
+//------> Socket.io error handling from server. <------
+io.on("connect_error", (err) => {
+      console.log(`connect_error due to ${err.message}`);
+    });
 
 //Importing routes
 const productsRoute = require("./routes/products")
