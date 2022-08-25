@@ -20,34 +20,6 @@ app.use(express.json())
 
 //db.query("DELETE FROM chat_messages")
 
-//------> Inserting messages and sender's name to the database. <------
-app.post('/chat-messages', (req, res) => {
-      
-      let customer = req.body.username
-      let sender = req.body.sender
-      let message = req.body.message 
-
-      db.query(`INSERT INTO chat_messages
-                VALUES (?,?,?)`, [customer, sender, message])
-})
-
-
-//------> Fetching all customer's name <------
-
-app.get('/chat-messages/customers', (req, res) => {
-
-      db.query("SELECT Customer FROM chat_messages GROUP BY Customer", (err, rows) => {
-            res.send(rows)
-        })
-})
-
-//------> Fetching all messages and sender's name from the database <------
-app.get('/chat-messages', (req, res) => {
-      db.query(`SELECT * FROM chat_messages `, (err, rows) => {
-                res.send(rows)
-            })
-})
-
 //------> Socket.io configurations. <------
 io.on('connection', (socket) => {   
     
@@ -70,8 +42,10 @@ io.on("connect_error", (err) => {
 
 //Importing routes
 const productsRoute = require("./routes/products")
+const chatRoute = require("./routes/chat")
 
 app.use('/products', productsRoute)
+app.use('/chat-messages', chatRoute)
 
 
 server.listen(port, () => console.log(`App is listening on port ${port}`))
