@@ -36,7 +36,7 @@ app.post('/chat-messages', (req, res) => {
 
 app.get('/chat-messages/customers', (req, res) => {
 
-      db.query("SELECT * FROM chat_messages GROUP BY Name", (err, rows) => {
+      db.query("SELECT Customer FROM chat_messages GROUP BY Customer", (err, rows) => {
             res.send(rows)
         })
 })
@@ -48,12 +48,11 @@ app.get('/chat-messages', (req, res) => {
             })
 })
 
-db.query(`DELETE FROM chat_messages`)
-
 //------> Socket.io configurations. <------
 io.on('connection', (socket) => {   
     
-   
+   /*When server receives a message from a customer or admin, we dynamically create an event
+     depending on customer's name, and emit it with the message to both parties.  */
    socket.on('chat message', (data) => {
 
          let name = data.username
