@@ -18,13 +18,17 @@ app.use(cors())
 app.use(express.urlencoded({extended: true}));
 app.use(express.json())
 
+//db.query("DELETE FROM chat_messages")
+
 //------> Inserting messages and sender's name to the database. <------
 app.post('/chat-messages', (req, res) => {
+      
+      let customer = req.body.username
+      let sender = req.body.sender
       let message = req.body.message 
-      let name = req.body.username
 
       db.query(`INSERT INTO chat_messages
-                VALUES (?,?)`, [name, message])
+                VALUES (?,?,?)`, [customer, sender, message])
 })
 
 
@@ -44,7 +48,7 @@ app.get('/chat-messages', (req, res) => {
             })
 })
 
-//db.query(`DELETE FROM chat_messages`)
+db.query(`DELETE FROM chat_messages`)
 
 //------> Socket.io configurations. <------
 io.on('connection', (socket) => {   
