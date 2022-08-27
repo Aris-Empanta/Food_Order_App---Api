@@ -19,10 +19,15 @@ router.put('/', (req, res) => {
 
 //------> Fetching all customer's name <------
 router.get('/customers', (req, res) => {
-
-    db.query("SELECT Sender, SUM(Read_status = 'unread') as Sum FROM chat_messages GROUP BY Customer",
-             (err, rows) =>  res.send(rows)
-            )
+    try {
+        db.query("SELECT Sender, SUM(Read_status = 'unread') as Sum FROM chat_messages GROUP BY Customer",
+                (err, rows) =>  {
+                                if(err)console.log(err)
+                                res.send(rows)}
+                )
+    } catch (err) {
+        console.log(err)
+      }
 })
 
 //------> Fetching the amount of all the unread messages <------

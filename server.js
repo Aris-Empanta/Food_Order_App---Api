@@ -30,15 +30,13 @@ io.on('connection', (socket) => {
          let name = data.username
          let sender = data.sender
          let message = data.message
+
          io.emit('customer ' + name, { message: message,
                                        sender: sender})
-   })  
+   }) 
+ 
 })
 
-//------> Socket.io error handling from server. <------
-io.on("connect_error", (err) => {
-      console.log(`connect_error due to ${err.message}`);
-    });
 
 //Importing routes
 const productsRoute = require("./routes/products")
