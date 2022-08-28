@@ -30,11 +30,16 @@ io.on('connection', (socket) => {
          let name = data.username
          let sender = data.sender
          let message = data.message
-
-         io.emit('customer ' + name, { message: message,
-                                       sender: sender})
+          io.emit('customer ' + name, { message: message,
+            sender: sender})
+            db.query(`INSERT INTO chat_messages VALUES (?,?,?,?)`,
+            [name, sender, message, 'read'])
+         
    }) 
- 
+
+   socket.on('send order', (data) => {
+    console.log(data)
+    io.emit('new order', data)}) 
 })
 
 
@@ -45,5 +50,5 @@ const chatRoute = require("./routes/chat")
 app.use('/products', productsRoute)
 app.use('/chat-messages', chatRoute)
 
-
-server.listen(port, () => console.log(`App is listening on port ${port}`))
+app.listen(port, () => console.log(`App is listening on port ${port}`))
+server.listen(5001, () => console.log(`Socket is listening on port 5001`))
