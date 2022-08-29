@@ -27,13 +27,26 @@ io.on('connection', (socket) => {
      depending on customer's name, and emit it with the message to both parties.  */
    socket.on('chat message', (data) => {
 
-         let name = data.username
-         let sender = data.sender
-         let message = data.message
+          let name = data.username
+          let sender = data.sender
+          let message = data.message
+
+          //Sending the real time message to the appropriate sender and receive
           io.emit('customer ' + name, { message: message,
-            sender: sender})
-            db.query(`INSERT INTO chat_messages VALUES (?,?,?,?)`,
-            [name, sender, message, 'read'])
+              sender: sender})
+          io.emit('new message')
+
+          /* Saving transferred messages to the database. Also setting the condition that 
+           admin's messages are not marked as unread to the admin's inbox*/
+          if( sender === 'admin' ) {
+
+                db.query(`INSERT INTO chat_messages VALUES (?,?,?,?)`,
+                          [name, sender, message, 'read'])
+            } else {
+
+                db.query(`INSERT INTO chat_messages VALUES (?,?,?,?)`, 
+                          [name, sender, message, 'unread'])
+            }
          
    }) 
 
@@ -46,6 +59,7 @@ io.on('connection', (socket) => {
 //Importing routes
 const productsRoute = require("./routes/products")
 const chatRoute = require("./routes/chat")
+
 
 app.use('/products', productsRoute)
 app.use('/chat-messages', chatRoute)
