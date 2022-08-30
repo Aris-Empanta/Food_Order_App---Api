@@ -18,7 +18,7 @@ app.use(cors())
 app.use(express.urlencoded({extended: true}));
 app.use(express.json())
 
-//db.query("DELETE FROM chat_messages")
+db.query("DELETE FROM chat_messages")
 
 //------> Socket.io configurations. <------
 io.on('connection', (socket) => {   
@@ -46,13 +46,15 @@ io.on('connection', (socket) => {
 
                 db.query(`INSERT INTO chat_messages VALUES (?,?,?,?)`, 
                           [name, sender, message, 'unread'])
-            }
-         
+            }         
    }) 
 
    socket.on('send order', (data) => {
     console.log(data)
-    io.emit('new order', data)}) 
+    io.emit('new order', data)
+   }) 
+
+   socket.on('messages detected', () => socket.emit('no new messages'))
 })
 
 
