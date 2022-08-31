@@ -18,7 +18,7 @@ app.use(cors())
 app.use(express.urlencoded({extended: true}));
 app.use(express.json())
 
-db.query("DELETE FROM chat_messages")
+//db.query("DELETE FROM chat_messages")
 
 //------> Socket.io configurations. <------
 io.on('connection', (socket) => {   
@@ -29,7 +29,7 @@ io.on('connection', (socket) => {
 
           let name = data.username
           let sender = data.sender
-          let message = data.message
+          let message = data.message 
 
           //Sending the real time message to the appropriate sender and receive
           io.emit('customer ' + name, { message: message,
@@ -48,19 +48,38 @@ io.on('connection', (socket) => {
                           [name, sender, message, 'unread'])
             }         
    }) 
-
+   
+   //Once admin private chat is open, no received message can have unread status
+   socket.on('inbox zero', (sender) => {
+          
+      db.query("UPDATE chat_messages SET Read_status = 'read' WHERE Sender=" + db.escape(sender))
+   })
+   
+   //Real time order sending from customer's app to admin dashboard
    socket.on('send order', (data) => {
     console.log(data)
     io.emit('new order', data)
    }) 
 
-   socket.on('messages detected', () => socket.emit('no new messages'))
+  //Updates the unread message indicator on navbar 
+  socket.on('update navbar', () => {
+
+    socket.emit('re-evaluate unread')
+  })
+  
+
+  socket.on('message read', (sender) => {
+    db.query("UPDATE chat_messages SET Read_status = 'read' WHERE Sender=" + db.escape(sender))
+  })
+
+
 })
 
 
 //Importing routes
 const productsRoute = require("./routes/products")
 const chatRoute = require("./routes/chat")
+const { isObject } = require("util")
 
 
 app.use('/products', productsRoute)

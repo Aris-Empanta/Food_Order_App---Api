@@ -10,12 +10,6 @@ router.get('/', (req, res) => {
           })
 })
 
-//------> With below endpoint 'unread' marked messages change to 'read'  <------
-router.put('/', (req, res) => {
-    let sender = req.body.sender
-
-    db.query("UPDATE chat_messages SET Read_status = 'read' WHERE Sender=" + db.escape(sender))
-})
 
 //------> Fetching all customer's name <------
 router.get('/customers', (req, res) => {
