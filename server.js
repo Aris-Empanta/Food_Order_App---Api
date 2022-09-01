@@ -53,7 +53,7 @@ io.on('connection', (socket) => {
    //Once admin private chat is open, no received message can have unread status
    socket.on('inbox zero', (sender) => {
           
-      db.query("UPDATE chat_messages SET Read_status = 'read' WHERE Sender=" + db.escape(sender))
+           db.query("UPDATE chat_messages SET Read_status = 'read' WHERE Sender=" + db.escape(sender))
    })
    
    //Real time order sending from customer's app to admin dashboard
@@ -68,20 +68,27 @@ io.on('connection', (socket) => {
     socket.emit('re-evaluate unread')
   })
   
-
+  //When we click on a conversation in chat dashboard with a customer, it makes unread messages with him 0.
   socket.on('message read', (sender) => {
+
     db.query("UPDATE chat_messages SET Read_status = 'read' WHERE Sender=" + db.escape(sender))
   })
+  
+  //The 2 listeners below emit notication to the admin that a specific customer is typing a message.
+  socket.on('I type', (data) => io.emit(data + ' is typing') )
 
+  socket.on('No typing', (data) => io.emit(data + " not typing") )
 
+  //The 2 listeners below emit notication to a specific customer that admin is typing a message.
+  socket.on('Admin typing', (data) => io.emit('Admin typing to ' + data) )
+
+  socket.on('Admin not typing', (data) => io.emit('Admin not typing to ' + data) )
 })
 
 
 //Importing routes
 const productsRoute = require("./routes/products")
 const chatRoute = require("./routes/chat")
-const { isObject } = require("util")
-
 
 app.use('/products', productsRoute)
 app.use('/chat-messages', chatRoute)
