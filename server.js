@@ -34,6 +34,7 @@ io.on('connection', (socket) => {
           //Sending the real time message to the appropriate sender and receive
           io.emit('customer ' + name, { message: message,
               sender: sender})
+              
           io.emit('new message')
 
           /* Saving transferred messages to the database. Also setting the condition that 
