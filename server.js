@@ -18,8 +18,6 @@ app.use(cors())
 app.use(express.urlencoded({extended: true}));
 app.use(express.json())
 
-//db.query("DELETE FROM chat_messages")
-
 //------> Socket.io configurations. <------
 io.on('connection', (socket) => {   
     

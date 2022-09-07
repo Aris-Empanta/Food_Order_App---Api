@@ -3,10 +3,11 @@ const router = express.Router()
 const db = require('../database/db')
 const multer = require("multer")
 const fs = require("fs")
+const productsController = require("../controlers/productsController")
 
 router.use("/images", express.static("uploads"))
 
-//------> The multer object configurations to accept files <------
+// The multer object configurations to accept files 
 const storage = multer.diskStorage({
       destination: (req, file, cb) => {
         cb(null, "uploads")
@@ -19,39 +20,17 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage: storage})
 
-//------> The products' info api endpoint <------
-router.get("/", (req, res) => {
-    
-    let products = "SELECT * FROM Products"
+// The route to get all products
+router.get("/", productsController.getAllProducts)
 
-    db.query(products, (err, rows) => {
-      res.send(rows)
-    })
+// The route to get all product categories
+router.get("/categories", productsController.getProductCategories)
 
-})
+// The route do get products by desired category
+router.get("/by-category/:category", productsController.getByCategory)
 
-//------> The products' categories api endpoint <------
-router.get("/categories", (req, res) => {
-    
-  let products = "SELECT * FROM Products GROUP BY Category"
-
-  db.query(products, (err, rows) => {
-    res.send(rows.map(item => item.Category))
-  })
-
-})
-
-//------> The products' by desired category api endpoint <------
-router.get("/by-category/:category", (req, res) => {
-  
-  let category = req.params.category
-  let products = "SELECT * FROM Products WHERE Category = " + db.escape(category)
-
-  db.query(products, (err, rows) => {
-    res.send(rows)
-  })
-
-})
+// The route do get products by desired id
+router.get("/by-id/:id", productsController.getById)
 
 //------> The post endpoint to accept new product data <------
 router.post("/add/:id", upload.single("image"),  (req, res) => {    
