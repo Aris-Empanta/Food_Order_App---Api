@@ -87,9 +87,11 @@ io.on('connection', (socket) => {
 //Importing routes
 const productsRoute = require("./routes/products")
 const chatRoute = require("./routes/chat")
+const mailConfirmationRoute = require("./routes/mailConfirmation")
 
 app.use('/products', productsRoute)
 app.use('/chat-messages', chatRoute)
+app.use('/confirm-email', mailConfirmationRoute)
 
 app.listen(port, () => console.log(`App is listening on port ${port}`))
 server.listen(5001, () => console.log(`Socket is listening on port 5001`))

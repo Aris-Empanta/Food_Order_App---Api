@@ -1,8 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const db = require('../database/db')
 const controler = require("../controlers/chatController")
-
 
 // The route to get all messages and sender's name from the database
 router.get('/', controler.getMessages)
