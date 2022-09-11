@@ -22,10 +22,12 @@ app.use(express.json())
 const productsRoute = require("./routes/products")
 const chatRoute = require("./routes/chat")
 const mailConfirmationRoute = require("./routes/mailConfirmation")
+const ordersRoute = require("./routes/orders")
 
 app.use('/products', productsRoute)
 app.use('/chat-messages', chatRoute)
 app.use('/confirm-email', mailConfirmationRoute)
+app.use('/orders', ordersRoute)
 
 app.listen(port, () => console.log(`App is listening on port ${port}`))
 server.listen(5001, () => console.log(`Socket is listening on port 5001`))
