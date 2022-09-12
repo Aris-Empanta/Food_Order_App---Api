@@ -10,16 +10,24 @@ module.exports = {
 
         let order = req.body
 
-        //Looping throught the total order to save the details to the database
-
-        for(let i = 0; i < order.length; i++) {
+       //Looping throught the total order to save the details to the database
+       for(let i = 0; i < order.length; i++) {
             //The product's order details
             let orderDetails = [order[i].orderId, order[i].customerName,
                                 order[i].customerMail, order[i].id,
                                 order[i].name, order[i].quantity,
-                                order[i].image, order[i].price]
+                                order[i].image, order[i].price,
+                                order[i].checkedStatus]
 
             model.saveNewOrder(db, orderDetails)
         }
+    },
+    ordersById: (req, res) => {
+
+        model.ordersById(db, (err, rows) => res.send(rows) )
+    },
+    getUnchecked: (req, res) => {
+
+        model.getUnchecked(db, (err, rows) => res.send(rows) )
     }
 }

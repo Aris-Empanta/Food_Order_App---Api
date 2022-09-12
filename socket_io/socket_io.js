@@ -1,6 +1,5 @@
 const db = require('../database/db')
 const controler = require("../controlers/socketController")
-const axios = require('axios')
 
 module.exports = (io) => {  io.sockets.on('connection', (socket) => {   
                               
@@ -25,17 +24,14 @@ module.exports = (io) => {  io.sockets.on('connection', (socket) => {
                               }) 
                               
                               //Once admin private chat is open, no received message can have unread status
-                              socket.on('inbox zero', (sender) => controler.markAsRead(db, sender))
-                              
-                              //Real time order sending from customer's app to admin dashboard
-                              socket.on('send order', (data) =>  io.emit('new order', data) )                                                                
+                              socket.on('inbox zero', (sender) => controler.markAsRead(db, sender))                                                                                  
                           
                               //Updates the unread message indicator on navbar 
                               socket.on('update navbar', () => socket.emit('re-evaluate unread') )                           
                               
                               //When we click on a conversation in chat dashboard with a customer, 
                               //it makes unread messages with him 0.
-                              socket.on('message read', (sender) => controler.readCustomersMessages(db, sender))
+                              socket.on('message read', (sender) => controler.markAsRead(db, sender))
                             
                               //The 2 listeners below emit notication to the admin that a specific
                               // customer is typing a message.
@@ -50,29 +46,6 @@ module.exports = (io) => {  io.sockets.on('connection', (socket) => {
                               socket.on('Admin not typing', (data) => io.emit('Admin not typing to ' + data) )
                             
                               //On new orders received
-                              socket.on("send order", (data) => {
-                                                      
-                                                      axios.get("http://localhost:5000/orders/latest-order-id")
-                                                            .then((res) => {
-                                                                            const latestId = res.data.latestId
-                                                                            let newId
-                                                                            //Generates order id with maximum number 999
-                                                                            latestId === null || latestId === 999 ? 
-                                                                            newId = 1 :
-                                                                            newId = latestId + 1
-
-                                                                            //The complete order data to be sent to the database
-                                                                            let finalOrder = data.map( item => {
-                                                                                                                 item["orderId"] = newId
-
-                                                                                                                 return item
-                                                                                                                })
-                                                                            //We send the data to the database
-                                                                            axios.post("http://localhost:5000/orders/new-order", finalOrder)
-                                                                                 .catch(err => console.log(err))                                                                   
-
-
-                                                                          }).catch(err => console.log(err))                      
-                                                    })
+                              socket.on("send order", (data) => controler.manageOrders(data, io))
                           })
                         }
