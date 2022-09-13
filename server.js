@@ -13,7 +13,9 @@ const port = process.env.PORT || 5000
 const cors = require("cors")
 const sockets = require("./socket_io/socket_io")(io)
 
-//const db = require("./database/db")
+const db = require("./database/db")
+
+db.query("CREATE TABLE products( Name TEXT )", (err) => { if(err)console.log(err) }) ;
 //db.query(`DELETE FROM orders`)
 
 //The middlewares needed to exchange data with frontend.
@@ -31,6 +33,7 @@ app.use('/products', productsRoute)
 app.use('/chat-messages', chatRoute)
 app.use('/confirm-email', mailConfirmationRoute)
 app.use('/orders', ordersRoute)
+
 
 app.listen(port, () => console.log(`App is listening on port ${port}`))
 server.listen(5001, () => console.log(`Socket is listening on port 5001`))
