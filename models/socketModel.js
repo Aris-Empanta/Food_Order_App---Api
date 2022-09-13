@@ -11,5 +11,12 @@ module.exports = {
                     + sql.escape(sender)
 
         sql.query(query)
+    },
+    markAsChecked: (sql, id) => {
+
+        let query = "UPDATE orders SET checkedStatus = 'checked' WHERE orderId="
+                    + sql.escape(id)
+
+        sql.query(query)
     }
 }

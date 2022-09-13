@@ -27,10 +27,16 @@ module.exports = (io) => {  io.sockets.on('connection', (socket) => {
                               socket.on('inbox zero', (sender) => controler.markAsRead(db, sender))                                                                                  
                           
                               //Updates the unread message indicator on navbar 
-                              socket.on('update navbar', () => socket.emit('re-evaluate unread') )                           
+                              socket.on('update navbar', () => io.emit('re-evaluate unread'))   
+
+                              //Updates the unchecked order indicator on navbar
+                              socket.on("order checked", () => io.emit("re-evaluate orders")) 
+
+                              //We change the checkedStatus of an order with specific id to checked
+                              socket.on('mark order checked', (id) => controler.markAsChecked(db, id))
                               
                               //When we click on a conversation in chat dashboard with a customer, 
-                              //it makes unread messages with him 0.
+                              //it makes unread messages with him 0. 
                               socket.on('message read', (sender) => controler.markAsRead(db, sender))
                             
                               //The 2 listeners below emit notication to the admin that a specific
@@ -46,6 +52,9 @@ module.exports = (io) => {  io.sockets.on('connection', (socket) => {
                               socket.on('Admin not typing', (data) => io.emit('Admin not typing to ' + data) )
                             
                               //On new orders received
-                              socket.on("send order", (data) => controler.manageOrders(data, io))
+                              socket.on("send order", (data) => { 
+                                                                  controler.manageOrders(data, io)
+                                                                  io.emit('new order')
+                                                                })
                           })
                         }

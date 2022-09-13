@@ -24,9 +24,22 @@ module.exports = {
 
         let query = `SELECT * FROM orders 
                      WHERE checkedStatus = 'unChecked'
-                     GROUP BY orderId
-                     `   
+                     GROUP BY orderId `   
                      
+
+        sql.query(query, callback)
+    },
+    getSpecificOrder: (sql, id,  callback) => {
+
+        let query = `SELECT * FROM orders
+                     WHERE orderId = ${id}`           
+
+        sql.query(query, callback)
+    },
+    getTotalPrice: (sql, id,  callback) => {
+
+        let query = `SELECT SUM(price) as totalPrice FROM orders
+                     WHERE orderId = ${id}`           
 
         sql.query(query, callback)
     }

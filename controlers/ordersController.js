@@ -29,5 +29,17 @@ module.exports = {
     getUnchecked: (req, res) => {
 
         model.getUnchecked(db, (err, rows) => res.send(rows) )
+    },
+    getSpecificOrder: (req, res) => {
+
+        let id = req.params.id
+
+        model.getSpecificOrder(db, id, (err, rows) => res.send(rows) )
+    },
+    getTotalPrice: (req, res) => {
+
+        let id = req.params.id
+
+        model.getTotalPrice(db, id, (err, rows) => res.send(rows[0]) )
     }
 }
