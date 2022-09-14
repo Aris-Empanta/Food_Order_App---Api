@@ -1,8 +1,11 @@
 const express = require("express")
 const router = express.Router()
 const nodemailer = require("nodemailer")
-const dotenv = require('dotenv').config()
 
+//  ATTENTION! Outlook and most free domains have limitation to the
+//emails you can send per minute/hour. If it were for real business
+//purposes, we should use a paied domain, or better use twillio services
+//to send confirmation code to the mobile phone.
 router.post("/", (req, res) => {
 
     let mail = req.body.mail

@@ -3,10 +3,10 @@ const mysql = require('mysql2')
 require("dotenv").config()
 
 const connection = mysql.createConnection({
-    host: 'db4free.net',
-    user: 'aris_empanta',
+    host: 'localhost',
+    user: 'root',
     password: process.env.DB_PASSWORD,
-    database: 'aris_restaurant',
+    database: 'restaurant',
     port: "3306"
   })
 

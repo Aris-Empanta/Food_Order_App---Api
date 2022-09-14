@@ -13,11 +13,6 @@ const port = process.env.PORT || 5000
 const cors = require("cors")
 const sockets = require("./socket_io/socket_io")(io)
 
-const db = require("./database/db")
-
-db.query("CREATE TABLE products( Name TEXT )", (err) => { if(err)console.log(err) }) ;
-//db.query(`DELETE FROM orders`)
-
 //The middlewares needed to exchange data with frontend.
 app.use(cors())
 app.use(express.urlencoded({extended: true}));
@@ -28,12 +23,13 @@ const productsRoute = require("./routes/products")
 const chatRoute = require("./routes/chat")
 const mailConfirmationRoute = require("./routes/mailConfirmation")
 const ordersRoute = require("./routes/orders")
+const customersRoute = require("./routes/customers")
 
 app.use('/products', productsRoute)
 app.use('/chat-messages', chatRoute)
 app.use('/confirm-email', mailConfirmationRoute)
 app.use('/orders', ordersRoute)
-
+app.use('/customers', customersRoute)
 
 app.listen(port, () => console.log(`App is listening on port ${port}`))
 server.listen(5001, () => console.log(`Socket is listening on port 5001`))
