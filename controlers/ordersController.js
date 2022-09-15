@@ -10,6 +10,8 @@ module.exports = {
 
         let order = req.body
 
+        console.log(req.body)
+
        //Looping throught the total order to save the details to the database
        for(let i = 0; i < order.length; i++) {
             //The product's order details
@@ -17,9 +19,13 @@ module.exports = {
                                 order[i].customerMail, order[i].id,
                                 order[i].name, order[i].quantity,
                                 order[i].image, order[i].price,
-                                order[i].checkedStatus]
+                                order[i].checkedStatus, order[i].comments,
+                                order[i].address, order[i].floor,
+                                order[i].phone]
 
-            model.saveNewOrder(db, orderDetails)
+            model.saveNewOrder(db, orderDetails, (err) => { if(err) { console.log(err) 
+                console.log(orderDetails)
+            }})
         }
     },
     ordersById: (req, res) => {

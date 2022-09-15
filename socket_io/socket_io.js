@@ -57,6 +57,8 @@ module.exports = (io) => {  io.sockets.on('connection', (socket) => {
                                                                   io.emit('new order')
                                                                 })
                               //On customer data received
-                              socket.on('confirmation', data => console.log(data))
+                              socket.on('customer data', (data) => { console.log(data)
+                                controler.saveCustomerData(db, data)}
+                                )
                           })
                         }

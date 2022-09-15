@@ -18,5 +18,11 @@ module.exports = {
                     + sql.escape(id)
 
         sql.query(query)
+    }, 
+    saveCustomerData: (sql, data, callback) => {
+
+        let query = `INSERT INTO customers VALUES (?,?,?,?,?)`
+
+        sql.query(query, data, callback)
     }
 }

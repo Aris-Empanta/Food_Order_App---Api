@@ -5,12 +5,12 @@ module.exports = {
 
         sql.query(query, callback)
     },
-    saveNewOrder: (sql, data) => {
+    saveNewOrder: (sql, data, callback) => {
 
         let query = `INSERT INTO orders VALUES 
-                     (?, ?, ?, ?, ?, ?, ?, ?, ?)`
+                     (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
 
-        sql.query(query, data)
+        sql.query(query, data, callback)
     },
     ordersById: (sql, callback) => {
 

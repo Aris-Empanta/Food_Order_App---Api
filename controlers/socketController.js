@@ -41,5 +41,13 @@ module.exports = {
                                                       io.emit('new order')                                
                                                       })
                                        .catch(err => console.log(err))
-                                }
+                                },
+      saveCustomerData: (db, data) => {
+                                    let customerData = [ data.name, data.address,
+                                                         data.floor, data.phone,
+                                                         data.email, data.comments ]
+                                    console.log(customerData)
+                                    model.saveCustomerData(db, customerData, (err, rows) => { if(err) console.log(err) })
+                                       
+                                  }
 }
