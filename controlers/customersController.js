@@ -10,6 +10,6 @@ module.exports = {
 
         let email = req.params.email
 
-        model.getCustomerByEmail(db, email, (err, rows) => res.send(rows))
+        model.getCustomerByEmail(db, email, (err, rows) => res.send(rows[0]))
     }
 }

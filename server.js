@@ -24,13 +24,13 @@ app.use(express.json())
 //Importing routes
 const productsRoute = require("./routes/products")
 const chatRoute = require("./routes/chat")
-const mailConfirmationRoute = require("./routes/mailConfirmation")
+const nodemailerRoute = require("./routes/nodemailer")
 const ordersRoute = require("./routes/orders")
 const customersRoute = require("./routes/customers")
 
 app.use('/products', productsRoute)
 app.use('/chat-messages', chatRoute)
-app.use('/confirm-email', mailConfirmationRoute)
+app.use('/confirm-email', nodemailerRoute)
 app.use('/orders', ordersRoute)
 app.use('/customers', customersRoute)
 
