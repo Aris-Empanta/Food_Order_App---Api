@@ -27,7 +27,7 @@ module.exports = {
     addProduct : (sql, array, callback) => {
 
         let query = `INSERT INTO Products VALUES 
-                     (?, ?, ?, ?, ?, ?,  ?, ?, ?, ?)`
+                     (?, ?, ?, ?, ?, ?,  ?, ?, ?)`
 
         sql.query( query, array, callback)
     },
@@ -48,12 +48,11 @@ module.exports = {
     editProduct : (sql, attributes, callback) => {
 
         let query = `UPDATE products SET Date = ?,
-                                 Name = ?,
-                                 Delivery_price = ?,
-                                 Take_away_price = ?,
-                                 Currency = ?,
-                                 Description = ?                            
-                             WHERE id = ?`
+                                     Name = ?,
+                                     Price = ?,
+                                     Currency = ?,
+                                     Description = ?                            
+                                 WHERE id = ?`
 
         sql.query( query, attributes, callback)
     },

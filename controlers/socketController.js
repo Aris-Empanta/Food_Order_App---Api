@@ -17,7 +17,7 @@ module.exports = {
                                                 },
     markAsRead: (db, sender) => model.markAsRead(db, sender) ,
     markAsChecked: (db, id) => model.markAsChecked(db, id), 
-    manageOrders: (data, io) => {
+    manageOrders: (data, io) => {                                 
                                  axios.get("http://localhost:5000/orders/latest-order-id")
                                       .then((res) => {
                                                       const latestId = res.data.latestId

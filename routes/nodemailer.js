@@ -4,8 +4,9 @@ const nodemailer = require("nodemailer")
 
 //  ATTENTION! Outlook and most free domains have limitation to the
 //emails you can send per minute/hour. If it were for real business
-//purposes, we should use a paied domain, or better use twillio services
-//to send confirmation code to the mobile phone.
+//purposes, we should use a paied domain.
+
+//The route to send verification code to the customer
 router.post("/", (req, res) => {
 
     let mail = req.body.mail
@@ -25,8 +26,11 @@ router.post("/", (req, res) => {
         to: mail, 
         subject: "YOUR EMAIL VERIFICATION", 
         text: verificationCode,      
-      }, (err) => { if(err) console.log(err)
-                    console.log("success")})       
+      }, (err) => { if(err) console.log(err)})       
 })
+
+//The route to send an email to the customer to inform him for order status
+
+
 
 module.exports = router;

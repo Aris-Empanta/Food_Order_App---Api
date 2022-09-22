@@ -41,15 +41,14 @@ module.exports = {
       let name = req.body.name    
       let currency = req.body.currency
       let quantity = req.body.quantity
-      let deliveryPrice = req.body.deliveryPrice
-      let takeAwayPrice = req.body.takeAwayPrice
+      let price = req.body.price
       let description = req.body.description
       let image = "http://localhost:5000/products/images/" + req.body.imageName    
       let date = new Date()
           date = date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear() +
                  "_" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
-      let productAttributes = [ category, name, currency, quantity, deliveryPrice,
-                                takeAwayPrice, description, date, image, id ]
+      let productAttributes = [ category, name, currency, quantity, price,
+                                description, date, image, id ]
         
       model.addProduct( db, productAttributes, (err, rows) => {
         if(err){
@@ -88,11 +87,10 @@ module.exports = {
       let id = req.params.id
       let date = req.body.date
       let name = req.body.name
-      let deliveryPrice = req.body.deliveryPrice
-      let takeAwayPrice = req.body.takeAwayPrice
+      let price = req.body.price
       let currency = req.body.currency
       let description = req.body.description  
-      let attributes = [date, name, deliveryPrice, takeAwayPrice, currency, description, id ]
+      let attributes = [date, name, price, currency, description, id ]
       
       model.editProduct( db, attributes, (err, result) => {
                                                             if (err) throw err
