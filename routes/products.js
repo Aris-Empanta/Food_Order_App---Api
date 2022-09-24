@@ -25,7 +25,9 @@ router.get("/", controller.getAllProducts)
 // The route to get all product categories
 router.get("/categories", controller.getProductCategories)
 
-// The route do get products by desired category
+router.get("/categories-with-image", controller.categoriesWithImage )
+
+// The route do get products by desired category 
 router.get("/by-category/:category", controller.getByCategory)
 
 // The route do get products by desired id

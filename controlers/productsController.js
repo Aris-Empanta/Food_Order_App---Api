@@ -18,6 +18,21 @@ module.exports = {
         res.send(rows.map(item => item.Category))
       })    
     },
+    categoriesWithImage : (req, res) => {
+
+      model.getCategories(db, (err, rows) => {
+
+        res.send(rows.map( item => {
+
+          let object = {}
+
+          object['category'] = item.Category
+          object['image'] = item.Image_name
+
+          return object
+        }))
+      })
+    },
     getByCategory : (req, res) => {
   
       let category = req.params.category
