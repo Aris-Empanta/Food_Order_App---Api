@@ -13,8 +13,9 @@ const port = process.env.PORT || 5000
 const cors = require("cors")
 const sockets = require("./socket_io/socket_io")(io)
 
-//const db = require("./database/db")
+const db = require("./database/db")
 //db.query(`ALTER TABLE products RENAME COLUMN Delivery_price TO Price`)
+//db.query(`ALTER TABLE products DROP COLUMN Take_away_price`)
 
 //The middlewares needed to exchange data with frontend.
 app.use(cors())
