@@ -9,8 +9,12 @@ module.exports = {
     saveNewOrder: (req, res) => {
 
         let order = req.body
+        console.log(order)
 
-        console.log(req.body)
+        let date = new Date()
+        
+        date = date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear() +
+                 "_" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
 
        //Looping throught the total order to save the details to the database
        for(let i = 0; i < order.length; i++) {
@@ -21,7 +25,7 @@ module.exports = {
                                 order[i].image, order[i].price,
                                 order[i].checkedStatus, order[i].comments,
                                 order[i].address, order[i].floor,
-                                order[i].phone]
+                                order[i].phone, date]
 
             model.saveNewOrder(db, orderDetails, (err) => { if(err) { console.log(err) 
                 console.log(orderDetails)
