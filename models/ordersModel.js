@@ -8,7 +8,7 @@ module.exports = {
     saveNewOrder: (sql, data, callback) => {
 
         let query = `INSERT INTO orders VALUES 
-                     (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)`
+                     (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?)` 
 
         sql.query(query, data, callback)
     },

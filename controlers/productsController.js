@@ -54,15 +54,14 @@ module.exports = {
       let id = req.params.id
       let category = req.body.category
       let name = req.body.name    
-      let currency = req.body.currency
-      let quantity = req.body.quantity
+      let currency = 'EUR'
       let price = req.body.price
       let description = req.body.description
       let image = "http://localhost:5000/products/images/" + req.body.imageName    
       let date = new Date()
           date = date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear() +
                  "_" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
-      let productAttributes = [ category, name, currency, quantity, price,
+      let productAttributes = [ category, name, currency, price,
                                 description, date, image, id ]
         
       model.addProduct( db, productAttributes, (err, rows) => {

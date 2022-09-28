@@ -25,7 +25,9 @@ module.exports = {
                                 order[i].image, order[i].price,
                                 order[i].checkedStatus, order[i].comments,
                                 order[i].address, order[i].floor,
-                                order[i].phone, date]
+                                order[i].phone, date,
+                                "EUR"
+                            ]
 
             model.saveNewOrder(db, orderDetails, (err) => { if(err) { console.log(err) 
                 console.log(orderDetails)
