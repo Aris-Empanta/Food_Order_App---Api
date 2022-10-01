@@ -13,10 +13,11 @@ const port = process.env.PORT || 5000
 const cors = require("cors")
 const sockets = require("./socket_io/socket_io")(io)
 
+
 //const db = require("./database/db")
-//db.query(`DELETE FROM customers`)
+//db.query(`DELETE FROM chat_messages`)
 //db.query(`ALTER TABLE orders
-//db.query(`ALTER TABLE customers ADD dateRegistered VARCHAR(255)`)
+//db.query(`ALTER TABLE chat_messages ADD dateReceived VARCHAR(255)`)
 
 //The middlewares needed to exchange data with frontend.
 app.use(cors())

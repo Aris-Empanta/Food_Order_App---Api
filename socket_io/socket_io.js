@@ -1,5 +1,6 @@
 const db = require('../database/db')
 const controler = require("../controlers/socketController")
+const currentDate = require("../functions/functions").currentDate
 
 module.exports = (io) => {  io.sockets.on('connection', (socket) => {   
                               
@@ -11,6 +12,7 @@ module.exports = (io) => {  io.sockets.on('connection', (socket) => {
                                     let name = data.username
                                     let sender = data.sender
                                     let message = data.message 
+                                    let date = currentDate()
                           
                                     //Sending the real time message to the appropriate sender and receive
                                     io.emit('customer ' + name, { message: message,
@@ -20,7 +22,7 @@ module.exports = (io) => {  io.sockets.on('connection', (socket) => {
                           
                                     /* Saving transferred messages to the database. Also setting the condition that 
                                       admin's messages are not marked as unread to the admin's inbox*/
-                                    controler.saveMessage(db, name, sender, message)        
+                                    controler.saveMessage(db, name, sender, message, date)        
                               }) 
                               
                               //Once admin private chat is open, no received message can have unread status

@@ -1,7 +1,7 @@
 module.exports = {
     saveMessage: (sql, messageDetails) => {
 
-        let query = `INSERT INTO chat_messages VALUES (?,?,?,?)`
+        let query = `INSERT INTO chat_messages VALUES (?,?,?,?,?)`
 
         sql.query(query, messageDetails)
     },

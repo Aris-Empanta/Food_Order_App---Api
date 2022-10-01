@@ -9,7 +9,21 @@ module.exports = {
     getCustomersNames : ( sql, callback ) => {
                     
                     let query = `SELECT Sender, SUM(Read_status = 'unread') as Sum 
-                                 FROM chat_messages GROUP BY Customer`
+                                 FROM chat_messages 
+                                 GROUP BY Customer`
+
+                    sql.query( query, callback )
+                },
+    getLatestMessage : ( sql, callback ) => {
+
+                    let query = `SELECT Customer, Message, dateReceived                                
+                                 FROM chat_messages
+                                 WHERE dateReceived in (
+                                    SELECT MAX(dateReceived)
+                                    FROM chat_messages
+                                    GROUP BY Customer
+                                 )                             
+                                 `
 
                     sql.query( query, callback )
                 },

@@ -3,15 +3,16 @@ const model = require('../models/socketModel')
 const functions = require("../functions/functions")
 
 module.exports = {
-    saveMessage: (db, name, sender, message) => {
+    saveMessage: (db, name, sender, message, date) => {
+
                                                  if( sender === 'admin' ) {                   
 
-                                                    let messageDetails = [name, sender, message, 'read']
+                                                    let messageDetails = [name, sender, message, 'read', date]
                                                     
                                                     model.saveMessage(db, messageDetails)
                                                  } else {
 
-                                                    let messageDetails = [name, sender, message, 'unread']
+                                                    let messageDetails = [name, sender, message, 'unread', date]
                                                     
                                                     model.saveMessage(db, messageDetails)
                                                  } 

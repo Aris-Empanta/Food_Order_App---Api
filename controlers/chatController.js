@@ -7,14 +7,21 @@ module.exports = {
 
         model.getMessages( db, (err, rows) => {
                                                 res.send(rows)
-                                              })       
+                                              })        
     },
     getCustomersNames : (req, res) => {
 
         model.getCustomersNames( db, (err, rows) =>  {
                                                       if(err)console.log(err)
                                                       res.send(rows)
-                                                    })       
+                                                     })       
+    },
+    getLatestMessage: (req, res) => {
+        
+        model.getLatestMessage(db, (err, rows) =>  {
+                                                    if(err)console.log(err)
+                                                    res.send(rows)
+                                                   })
     },
     getUnread : (req, res) => {
 
@@ -27,7 +34,7 @@ module.exports = {
         let customer = req.body.username
         let sender = req.body.sender
         let message = req.body.message
-    
+                   
         /* Setting below condition so that admin's messages are not marked 
           as unread to the admin's inbox*/
         if( sender === 'admin' ) {

@@ -9,7 +9,10 @@ router.get('/', controler.getMessages)
 router.get('/customers', controler.getCustomersNames)
 
 // The route to get the amount of all the unread messages
-router.get('/unread-messages', controler.getUnread)
+router.get('/unread-messages', controler.getUnread) 
+
+//The route to get the latest each customer's message and the date receiver
+router.get('/latest-message', controler.getLatestMessage)
 
 // The route to save messages and sender's name in the database
 router.post('/', controler.saveMessage)
