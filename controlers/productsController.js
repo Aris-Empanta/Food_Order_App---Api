@@ -1,6 +1,7 @@
 const db = require('../database/db')
 const model = require("../models/productsModel")
 const fs = require("fs")
+const functions = require("../functions/functions")
 
 //All the controllers for the product's CRUD operation
 module.exports = {
@@ -58,9 +59,8 @@ module.exports = {
       let price = req.body.price
       let description = req.body.description
       let image = "http://localhost:5000/products/images/" + req.body.imageName    
-      let date = new Date()
-          date = date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear() +
-                 "_" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
+      let date = functions.currentDate()
+
       let productAttributes = [ category, name, currency, price,
                                 description, date, image, id ]
         
@@ -74,9 +74,7 @@ module.exports = {
 
       let newImage = "http://localhost:5000/products/images/" + req.file.filename
       let id = req.params.id
-      let date = new Date()
-      date = date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear() +
-             "_" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
+      let date = functions.currentDate()
       let oldImage
       let newImageAttributes = [date, newImage, id]
       

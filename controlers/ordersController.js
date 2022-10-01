@@ -1,5 +1,6 @@
 const db = require("../database/db")
-const model = require("../models/ordersModel")
+const model = require("../models/ordersModel") 
+const functions = require("../functions/functions")
 
 module.exports = {
     latestOrderId: (req, res) => {
@@ -9,12 +10,8 @@ module.exports = {
     saveNewOrder: (req, res) => {
 
         let order = req.body
-        console.log(order)
 
-        let date = new Date()
-        
-        date = date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear() +
-                 "_" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
+        let date = functions.currentDate()
 
        //Looping throught the total order to save the details to the database
        for(let i = 0; i < order.length; i++) {
@@ -26,8 +23,7 @@ module.exports = {
                                 order[i].checkedStatus, order[i].comments,
                                 order[i].address, order[i].floor,
                                 order[i].phone, date,
-                                "EUR"
-                            ]
+                                "EUR",order[i].unitPrice ]
 
             model.saveNewOrder(db, orderDetails, (err) => { if(err) { console.log(err) 
                 console.log(orderDetails)

@@ -1,5 +1,6 @@
 const axios = require('axios');
 const model = require('../models/socketModel')
+const functions = require("../functions/functions")
 
 module.exports = {
     saveMessage: (db, name, sender, message) => {
@@ -43,11 +44,12 @@ module.exports = {
                                        .catch(err => console.log(err))
                                 },
       saveCustomerData: (db, data) => {
-                                    let customerData = [ data.name, data.address,
-                                                         data.floor, data.phone,
-                                                         data.email, data.comments ]
-                                    console.log(customerData)
-                                    model.saveCustomerData(db, customerData, (err, rows) => { if(err) console.log(err) })
+                                       let date = functions.currentDate()
+
+                                       let customerData = [ data.name, data.address,
+                                                            data.floor, data.phone,
+                                                            data.email, date ]
                                        
+                                       model.saveCustomerData(db, customerData, (err, rows) => { if(err) console.log(err) })                                       
                                   }
 }

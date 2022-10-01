@@ -14,9 +14,9 @@ const cors = require("cors")
 const sockets = require("./socket_io/socket_io")(io)
 
 //const db = require("./database/db")
+//db.query(`DELETE FROM customers`)
 //db.query(`ALTER TABLE orders
-//DROP INDEX orderId;`)
-//db.query(`ALTER TABLE products DROP COLUMN Quantity`)
+//db.query(`ALTER TABLE customers ADD dateRegistered VARCHAR(255)`)
 
 //The middlewares needed to exchange data with frontend.
 app.use(cors())
