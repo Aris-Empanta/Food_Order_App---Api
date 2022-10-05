@@ -16,7 +16,7 @@ module.exports = {
                                                       res.send(rows)
                                                      })       
     },
-    getLatestMessage: (req, res) => {
+    getLatestMessage: (req, res) => { 
         
         model.getLatestMessage(db, (err, rows) =>  {
                                                     if(err)console.log(err)
@@ -49,5 +49,32 @@ module.exports = {
             model.saveAsUnread( db, savedAsUnread )            
         }
         
+    },
+    deleteConversation: (req, res) => {
+
+        let customer = req.params.customer
+
+        model.deleteConversation(db, customer, (err, rows) => { if (err) throw err;  })
+    },
+    markAsUnread: (req, res) => {
+
+        let customers = req.body.customers
+
+        for(let customer of customers) {
+
+            model.markAsUnread(db, customer, (err, rows) => { if (err) throw err;  })
+        }
+    },
+    deleteSelected: (req, res) => {
+
+        //We convert the received parameters payload to an array so that
+        //we can iterate to delete each customer's conversation.
+        let customers = req.params.customer.split('-')
+
+        
+        for(let customer of customers) {
+
+            model.deleteConversation(db, customer, (err, rows) => { if (err) throw err;  })
+        }
     }
 }

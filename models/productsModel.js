@@ -63,7 +63,7 @@ module.exports = {
         sql.query( query, callback)
     },
     deleteProduct : (sql, id, callback) => {
-
+ 
         let query = `DELETE FROM products WHERE ID = ${id}`
 
         sql.query( query, callback)
