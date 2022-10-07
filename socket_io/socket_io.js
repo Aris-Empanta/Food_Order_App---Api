@@ -16,7 +16,8 @@ module.exports = (io) => {  io.sockets.on('connection', (socket) => {
                           
                                     //Sending the real time message to the appropriate sender and receive
                                     io.emit('customer ' + name, { message: message,
-                                                                  sender: sender})
+                                                                  sender: sender,
+                                                                  date: date})
                                         
                                     io.emit('new message')
                           

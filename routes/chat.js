@@ -2,8 +2,12 @@ const express = require("express")
 const router = express.Router()
 const controler = require("../controlers/chatController")
 
-// The route to get all messages and sender's name from the database
+// The route to get all messages and sender's name from the database 
+//sorted by date descending
 router.get('/', controler.getMessages)
+
+// The route to get all messages and sender's name from the database 
+//sorted by date ascending
 
 // The route to get all customers' names
 router.get('/customers', controler.getCustomersNames)

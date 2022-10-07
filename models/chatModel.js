@@ -3,10 +3,11 @@ module.exports = {
     getMessages: ( sql, callback ) => {
 
                     let query = `SELECT * FROM chat_messages 
-                                 ORDER BY dateReceived DESC`
+                                 ORDER BY dateReceived`
 
                     sql.query( query, callback )
                 },
+                
     getCustomersNames: ( sql, callback ) => {
                     
                     let query = `SELECT Customer, 
@@ -48,7 +49,7 @@ module.exports = {
 
                   sql.query( query, attributes )
               },
-    saveAsUnread: ( sql, attributes) => {
+    saveAsUnread: ( sql, attributes) => { 
                     
                   let query = `INSERT INTO chat_messages 
                                VALUES (?,?,?,?)`
