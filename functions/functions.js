@@ -14,12 +14,10 @@ module.exports = {
 
         let hours = getTwoDigits( date.getHours() )
 
-        let minutes = getTwoDigits( date.getMinutes() )
-
-        let seconds = getTwoDigits( date.getSeconds() )
+        let minutes = getTwoDigits( date.getMinutes() )        
 
         date = day + "/" + month + "/" + date.getFullYear() +
-                 " " + hours + ":" + minutes + ":" + seconds
+                 " " + hours + ":" + minutes
                  
         return date
     }

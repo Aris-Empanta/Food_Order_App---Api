@@ -1,7 +1,7 @@
 const db = require('../database/db')
 const model = require("../models/productsModel")
 const fs = require("fs")
-const functions = require("../functions/functions")
+const currentDate = require("../functions/functions").currentDate
 
 //All the controllers for the product's CRUD operation
 module.exports = {
@@ -47,7 +47,7 @@ module.exports = {
       let id = req.params.id 
     
       model.getById(db, id, (err, rows) => {
-        res.send(rows)
+        res.send(rows) 
       })
     },
     addProduct : (req, res) => {    
@@ -59,7 +59,7 @@ module.exports = {
       let price = req.body.price
       let description = req.body.description
       let image = "http://localhost:5000/products/images/" + req.body.imageName    
-      let date = functions.currentDate()
+      let date = currentDate()
 
       let productAttributes = [ category, name, currency, price,
                                 description, date, image, id ]
