@@ -11,6 +11,9 @@ module.exports = {
 
         let order = req.body
 
+        let orderTotalPrice = order.map( item => item.price)
+                                   .reduce( (previousValue, currentValue) => previousValue + currentValue, 0)
+
         let date = functions.currentDate()
 
        //Looping throught the total order to save the details to the database
@@ -23,10 +26,10 @@ module.exports = {
                                 order[i].checkedStatus, order[i].comments,
                                 order[i].address, order[i].floor,
                                 order[i].phone, date,
-                                "EUR",order[i].unitPrice ]
-
+                                "EUR",order[i].unitPrice, orderTotalPrice ]
+ 
             model.saveNewOrder(db, orderDetails, (err) => { if(err) { console.log(err) 
-                console.log(orderDetails)
+                
             }})
         }
     },
