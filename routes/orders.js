@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const controler = require("../controlers/ordersController")
+const path = require('path');
 
 //The route to get the id of the latest order made
 router.get("/latest-order-id", controler.latestOrderId)
@@ -19,5 +20,10 @@ router.post("/new-order", controler.saveNewOrder )
 
 // The route to get the amount of all the unchecked orders
 router.get('/unchecked-orders', controler.getUnchecked)
+
+router.get('/invoice', (req, res, next) => {
+
+    res.sendFile(path.join(__dirname, "../invoices", "output.pdf"))
+})
 
 module.exports = router

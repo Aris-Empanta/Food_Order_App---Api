@@ -25,7 +25,7 @@ router.post("/", (req, res) => {
         from: process.env.ADMIN_MAIL ,
         to: mail, 
         subject: "YOUR EMAIL VERIFICATION", 
-        text: verificationCode,      
+        text: verificationCode + "\n\n This code will be active for the next five minutes.",      
       }, (err) => { if(err) console.log(err)})       
 })
 

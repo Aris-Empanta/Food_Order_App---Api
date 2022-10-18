@@ -1,5 +1,7 @@
 const db = require("../database/db")
 const model = require("../models/ordersModel") 
+const PDFDocument = require('pdfkit');
+const fs = require('fs');
 const functions = require("../functions/functions")
 
 module.exports = {
@@ -32,6 +34,15 @@ module.exports = {
                 
             }})
         }
+
+        //We create a pdf invoice using the pdfkit library
+        const doc = new PDFDocument();
+
+        doc.pipe(fs.createWriteStream('./invoices/output.pdf'));
+
+        doc.text('hello world')
+
+        doc.end()
     },
     ordersById: (req, res) => {
 
