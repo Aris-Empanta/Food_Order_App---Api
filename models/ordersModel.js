@@ -5,10 +5,18 @@ module.exports = {
 
         sql.query(query, callback)
     },
+    latestCustomerOrder: (sql, mail, callback) => {
+
+        let query = `SELECT MAX(orderId) as id
+                     FROM orders 
+                     WHERE customerMail = ?`
+
+        sql.query(query, mail, callback)
+    },
     saveNewOrder: (sql, data, callback) => {
 
         let query = `INSERT INTO orders VALUES 
-                     (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ? ,? ,?)`  
+                     (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ? ,? ,?, ?)`  
 
         sql.query(query, data, callback)
     },

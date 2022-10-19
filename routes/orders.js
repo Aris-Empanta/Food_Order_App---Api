@@ -2,9 +2,16 @@ const express = require("express")
 const router = express.Router()
 const controler = require("../controlers/ordersController")
 const path = require('path');
+const fs = require("fs")
+
+//Creating a route for each invoice pdf
+router.use('/invoices', express.static("invoices") )
 
 //The route to get the id of the latest order made
 router.get("/latest-order-id", controler.latestOrderId)
+
+//The route to get the latest order id of a specific customer
+router.get("/latest-order-id-of-:mail", controler.latestCustomerOrder)
 
 //The route to get the orders group by id
 router.get("/orders-by-id", controler.ordersById)
