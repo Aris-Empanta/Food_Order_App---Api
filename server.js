@@ -33,3 +33,54 @@ app.use('/orders', ordersRoute)
 app.use('/customers', customersRoute)
 
 server.listen(port, () => console.log(`Server is listening on port ${port}`))
+
+const PDFDocument = require('pdfkit');
+const fs = require('fs');
+
+const doc = new PDFDocument();
+
+doc.pipe(fs.createWriteStream('./invoices/invoice.pdf'));
+
+doc.fontSize('24')
+   .font('Helvetica-Bold')
+   .fillColor("#303030")
+   .text('INVOICE')
+
+doc.fontSize('12')
+   .font('Helvetica-Bold')
+   .fillColor("#303030")
+   .text('ARIS RESTAURANT', {align: 'right'})
+
+doc.fontSize('12')
+    .font('Helvetica')
+    .fillColor("#303030")
+    .text('Eptanisou 12', {align: 'right'})
+
+doc.fontSize('12')
+    .font('Helvetica')
+    .fillColor("#303030")
+    .text('Kypseli, Athens', { align: 'right' })
+
+doc.fontSize('12')
+    .font('Helvetica')
+    .fillColor("#303030")
+    .text('11256', { align: 'right' })
+
+doc.fontSize('12')
+    .font('Helvetica')
+    .fillColor("#303030")
+    .text('Greece', { align: 'right' })
+
+doc.fontSize('12')
+    .font('Helvetica')
+    .fillColor("#303030")
+    .text('210-3456-782', { align: 'right',
+                            paragraphGap: 50})
+
+doc.fontSize('12')
+    .font('Helvetica')
+    .fillColor("blue")
+    .text('Billed to: ', { align: 'left'})
+            
+
+doc.end()
