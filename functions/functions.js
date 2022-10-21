@@ -21,6 +21,23 @@ module.exports = {
                  
         return date
     },
+    onlyDate: () => {
+
+        const getTwoDigits = (number) => { 
+
+            return number > 9 ? number : '0' + number
+        }        
+
+        let date = new Date()
+
+        let day = getTwoDigits( date.getDate() )
+
+        let month = getTwoDigits( date.getMonth() + 1 )
+
+        date = day + "/" + month + "/" + date.getFullYear() 
+                        
+        return date
+    },
     invoiceName: (id) => {
 
         //We create a name for the invoice file, 
@@ -41,5 +58,7 @@ module.exports = {
         return 'invoice' + randomNumber + orderId
     }
 }
+
+
 
 
