@@ -7,8 +7,8 @@ module.exports = {
     },
     latestCustomerOrder: (sql, mail, callback) => {
 
-        let query = `SELECT MAX(orderId) as id
-                     FROM orders 
+        let query = `SELECT MAX(invoice) as invoice
+                     FROM orders                    
                      WHERE customerMail = ?`
 
         sql.query(query, mail, callback)

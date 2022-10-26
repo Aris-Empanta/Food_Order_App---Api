@@ -23,7 +23,7 @@ module.exports = {
         doc.fontSize('12')
         .font('Helvetica-Bold')
         .fillColor("#303030")
-        .text('ARIS RESTAURANT', 427, 80, { paragraphGap: 5 })
+        .text('ARIS SNACK BAR', 427, 80, { paragraphGap: 5 })
 
         doc.fontSize('12')
             .font('Helvetica')

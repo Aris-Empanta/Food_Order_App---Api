@@ -7,7 +7,7 @@ const nodemailer = require("nodemailer")
 //purposes, we should use a paied domain.
 
 //The route to send verification code to the customer
-router.post("/", (req, res) => {
+router.post("/confirm", (req, res) => {
 
     let mail = req.body.mail
     //Nodemailer accept only string in its configurations
@@ -29,7 +29,35 @@ router.post("/", (req, res) => {
       }, (err) => { if(err) console.log(err)})       
 })
 
-//The route to send an email to the customer to inform him for order status
+
+//The route that a customer uses to send a mail to admin
+router.post("/customer-form", (req, res) => {
+
+  let name = req.body.name.toUpperCase()
+  let email = req.body.email
+  let phone = req.body.phone
+  let comments = req.body.comments
+
+  let transporter = nodemailer.createTransport({
+    service: 'outlook',
+    auth: {
+      user: process.env.ADMIN_MAIL,
+      pass: process.env.ADMIN_PASSWORD
+    }
+  })
+
+  transporter.sendMail({
+      from: process.env.ADMIN_MAIL ,
+      to: "eams220891@gmail.com", 
+      subject: "EMAIL FROM CUSTOMER NAMED " + name, 
+      text: `Customer's contact Info 
+                email: ${ email }
+                phone number: ${ phone }             
+             
+             Hello,             
+             ${comments}`     
+    }, (err) => { if(err) console.log(err)})    
+})
 
 
 
