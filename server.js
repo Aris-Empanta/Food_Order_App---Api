@@ -24,11 +24,13 @@ const chatRoute = require("./routes/chat")
 const nodemailerRoute = require("./routes/nodemailer")
 const ordersRoute = require("./routes/orders")
 const customersRoute = require("./routes/customers")
+const notificationsRoute = require("./routes/notifications")
 
 app.use('/products', productsRoute)
 app.use('/chat-messages', chatRoute)
 app.use('/email', nodemailerRoute)
 app.use('/orders', ordersRoute)
 app.use('/customers', customersRoute)
+app.use('/notifications', notificationsRoute)
 
 server.listen(port, () => console.log(`Server is listening on port ${port}`))

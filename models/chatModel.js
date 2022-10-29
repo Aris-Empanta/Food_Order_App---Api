@@ -1,5 +1,16 @@
 //All the mySql queries to be used for chat section
 module.exports = {
+    onlyCustomersMessages: (sql, callback) => {
+
+                    let query = `SELECT Sender as customerName, 
+                                        dateReceived,
+                                        Read_status as checkedStatus 
+                                 FROM chat_messages
+                                 WHERE Sender <> 'admin' 
+                                 ORDER BY dateReceived DESC`
+
+                    sql.query( query, callback )
+    },
     getMessages: ( sql, callback ) => {
 
                     let query = `SELECT * FROM chat_messages 

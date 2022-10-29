@@ -3,6 +3,12 @@ const model = require("../models/chatModel")
 
 //All the controllers for the chat section's CRUD operation
 module.exports = {
+    onlyCustomersMessages: (req, res) => {
+
+        model.onlyCustomersMessages(db, (err, rows) => {
+                                                    res.send(rows)
+                                                })
+    },
     getMessages : (req, res) => {
 
         model.getMessages( db, (err, rows) => {
@@ -10,7 +16,7 @@ module.exports = {
                                               })        
     },
     getCustomersNames : (req, res) => {
-
+ 
         model.getCustomersNames( db, (err, rows) =>  {
                                                       if(err)console.log(err)
                                                       res.send(rows)

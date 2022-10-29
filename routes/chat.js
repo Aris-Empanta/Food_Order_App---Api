@@ -6,8 +6,8 @@ const controler = require("../controlers/chatController")
 //sorted by date descending
 router.get('/', controler.getMessages)
 
-// The route to get all messages and sender's name from the database 
-//sorted by date ascending
+//The route to get only customer's messages
+router.get('/only-customers', controler.onlyCustomersMessages )
 
 // The route to get all customers' names
 router.get('/customers', controler.getCustomersNames)

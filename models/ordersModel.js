@@ -1,4 +1,15 @@
 module.exports = {
+    distinctOrders: (sql, callback) => {
+
+        let query = `SELECT customerName, 
+                            date as dateReceived,
+                            checkedStatus 
+                     FROM orders
+                     GROUP BY orderId
+                     ORDER BY dateReceived DESC`
+
+        sql.query(query, callback)
+    },
     latestOrderId: (sql, callback) => {
 
         let query = "SELECT MAX(orderId) as latestId FROM orders"

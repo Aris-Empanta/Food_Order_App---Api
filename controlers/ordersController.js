@@ -3,9 +3,13 @@ const model = require("../models/ordersModel")
 const createInvoice = require("../functions/invoiceGenerator").createInvoice
 const currentDate = require("../functions/functions").currentDate
 const invoiceName = require("../functions/functions").invoiceName
-
+ 
 
 module.exports = {
+    distinctOrders: (req, res) => {
+
+        model.distinctOrders(db, (err, rows) => res.send(rows) )
+    },
     latestOrderId: (req, res) => {
 
         model.latestOrderId(db, (err, rows) => res.send(rows[0]))
