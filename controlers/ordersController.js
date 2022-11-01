@@ -31,7 +31,7 @@ module.exports = {
         let date = currentDate()
 
         //The complex invoice file name to be distinctive
-        let invoice = invoiceName(order[0].orderId)
+        let invoice = invoiceName(order[0].orderId) 
 
         //The invoice url to be saved to the database
         let invoiceUrl = "http://localhost:5000/orders/invoices/" + invoice

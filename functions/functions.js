@@ -58,7 +58,3 @@ module.exports = {
         return 'invoice' + randomNumber + orderId
     }
 }
-
-
-
-

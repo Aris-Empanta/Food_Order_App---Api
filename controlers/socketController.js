@@ -38,9 +38,10 @@ module.exports = {
 
                                                       //We send the order's details to the database
                                                       axios.post("http://localhost:5000/orders/new-order", finalOrder)
-                                                           .catch(err => console.log(err))
-                                                      //Send the order to the admin in real-time as push notification
-                                                      io.emit('new order')                                
+                                                           //Send the order to the admin in real-time as push notification
+                                                           .then( io.emit('new order'))
+                                                           .catch(err => console.log(err))                               
+                                                                                       
                                                       })
                                        .catch(err => console.log(err))
                                 },
@@ -53,4 +54,4 @@ module.exports = {
                                        
                                        model.saveCustomerData(db, customerData, (err, rows) => { if(err) console.log(err) })                                       
                                   }
-}
+} 

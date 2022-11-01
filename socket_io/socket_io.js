@@ -56,8 +56,12 @@ module.exports = (io) => {  io.sockets.on('connection', (socket) => {
                             
                               //On new orders received
                               socket.on("send order", (data) => { 
+                                                                try {
                                                                   controler.manageOrders(data, io)
-                                                                  io.emit('new order')
+                                                                } catch (e) {
+                                                                  console.log(e)
+                                                                }
+                                                                  
                                                                 }) 
                               //On customer data received
                               socket.on('customer data', (data) => { 
