@@ -59,7 +59,48 @@ module.exports = {
     },
     ordersById: (req, res) => {
 
-        model.ordersById(db, (err, rows) => res.send(rows) )
+        let number = req.query.number
+        
+        //The function below, will send to the requesting party only 10 of the orders
+        //depending the requested number. 
+        const sendOrders = (err, rows) => { 
+
+                                            let ordersQuantity = rows.length
+                                            let maximum = ordersQuantity - (number - 1) * 10
+                                            let minimum = maximum > 10 ? maximum - 10 : 0
+
+                                            let orders = rows.slice(minimum, maximum).reverse()
+
+                                            res.send(orders)                                            
+                                        }
+
+        model.ordersById(db, sendOrders)
+    },
+    getOrdersAmount: (req, res) => {
+        
+        //The function to get all the groups of tens. For example, if orders = 70,
+        // there are 7 groups, if orders = 72 there are 8 groups. The we make an
+        //array containgn all numbers from 1 to the amount number.
+        const getGroups = (rows) => {
+
+            let amount = rows.length % 10  ===  0  ?  rows.length / 10 :
+                         rows.length / 10 - (rows.length % 10 / 10) + 1
+            
+            let groups = []
+
+            for( let i=1; i <= amount; i++ ) {
+
+                groups.push(i)
+            }
+
+            return groups
+        }
+
+        model.ordersById(db, (err, rows) => {
+                                               let groups = getGroups(rows)
+                                               
+                                               res.send(groups)
+                                            })
     },
     getUnchecked: (req, res) => {
 

@@ -35,9 +35,9 @@ module.exports = {
 
         let query = `SELECT * FROM orders 
                      GROUP BY orderId
-                     ORDER BY orderId DESC`
+                     ORDER BY orderId`
 
-        sql.query(query, callback)
+        sql.query(query,  callback)
     },
     getUnchecked: (sql, callback) => {
 

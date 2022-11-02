@@ -19,6 +19,9 @@ router.get("/latest-order-id-of-:mail", controler.latestCustomerOrder)
 //The route to get the orders group by id
 router.get("/orders-by-id", controler.ordersById)
 
+//The route to get the total amount of the orders divided by 10
+router.get("/orders-amount", controler.getOrdersAmount )
+
 //The route to get an order with a specific id
 router.get("/order-with-id-:id", controler.getSpecificOrder)
 

@@ -24,9 +24,7 @@ module.exports = {
                                       .then((res) => {
                                                       const latestId = res.data.latestId
                                                       let newId
-                                                      //Generates order id with maximum number 999
-                                                      latestId === null || latestId === 999 ? 
-                                                      newId = 1 :
+                                                      
                                                       newId = latestId + 1
 
                                                       //The complete order data to be sent to the database
