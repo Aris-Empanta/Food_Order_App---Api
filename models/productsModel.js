@@ -2,38 +2,38 @@
 module.exports = {
     getProducts: (sql, callback) => {
 
-        let query = "SELECT * FROM Products"
+        let query = "SELECT * FROM products"
 
         sql.query( query, callback)
     },
     getCategories : (sql, callback) => {
 
-        let query = "SELECT * FROM Products GROUP BY Category"
+        let query = "SELECT * FROM products GROUP BY Category"
 
         sql.query( query, callback)
     },
     getByCategory : (sql, category, callback) => {
 
-        let query = "SELECT * FROM Products WHERE Category = " + sql.escape(category)
+        let query = "SELECT * FROM products WHERE Category = " + sql.escape(category)
 
         sql.query( query, callback)
     },
     getById : (sql, id, callback) => {
 
-        let query = "SELECT * FROM Products WHERE ID = " + sql.escape(id)
+        let query = "SELECT * FROM products WHERE ID = " + sql.escape(id)
 
         sql.query( query, callback)
     },
     addProduct : (sql, array, callback) => {
 
-        let query = `INSERT INTO Products VALUES 
+        let query = `INSERT INTO products VALUES 
                      (?, ?, ?, ?, ?, ?,  ?, ?)`
 
         sql.query( query, array, callback)
     },
     deleteOldImage : (sql, id,  callback) => {
 
-        let query = `SELECT * FROM Products WHERE ID=${id}`
+        let query = `SELECT * FROM products WHERE ID=${id}`
 
         sql.query( query, callback)
     },
@@ -48,11 +48,11 @@ module.exports = {
     editProduct : (sql, attributes, callback) => {
 
         let query = `UPDATE products SET Date = ?,
-                                     Name = ?,
-                                     Price = ?,
-                                     Currency = ?,
-                                     Description = ?                            
-                                 WHERE id = ?`
+                                        Name = ?,
+                                        Price = ?,
+                                        Currency = ?,
+                                        Description = ?                            
+                                    WHERE id = ?`
 
         sql.query( query, attributes, callback)
     },

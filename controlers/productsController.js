@@ -16,7 +16,7 @@ module.exports = {
     
       model.getCategories(db, (err, rows) => {
 
-        res.send(rows.map(item => item.Category))
+       res.send(rows.map(item => item.Category))
       })    
     },
     categoriesWithImage : (req, res) => {
