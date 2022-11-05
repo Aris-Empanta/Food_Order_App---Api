@@ -56,5 +56,48 @@ module.exports = {
                       '_' + id
 
         return 'invoice' + randomNumber + orderId
+    },
+    daysAgo: (days) => {
+
+        //this function will return the date depending of the days ago
+        //argument we put.
+        const getTwoDigits = (number) => { 
+
+            return number > 9 ? number : '0' + number
+        }        
+
+        let date = new Date()
+
+        date.setDate(date.getDate() - days)
+        
+        let day = getTwoDigits( date.getDate() )
+
+        let month = getTwoDigits( date.getMonth() + 1 )
+        
+        let year = date.getFullYear()
+        
+        date =  day + "/" + month + "/" + year
+                        
+        return date
+    },
+    getDayName: (day) => {
+
+        //This function gives the date name if the argument date is
+        //in a date format of this type: dd/mm/yyyy
+        let date = day.split("/").reverse().join("/")              
+        let newDate = new Date(date)
+        newDate = newDate.getDay()
+
+        let daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday',
+                             'Wednesday', 'Thurday', 'Friday',
+                             'Saturday']
+        let dayName
+        
+        for( let i=0; i < daysOfTheWeek.length; i++ ) {
+
+            if(i === newDate) dayName =  daysOfTheWeek[i] 
+        }
+
+        return dayName
     }
 }

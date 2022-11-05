@@ -12,7 +12,7 @@ const connection = mysql.createConnection({
 
 connection.connect((err) => { if(err) {
                                 return console.error('error: ' + err.message);
-                            } 
+                               } 
                             console.log("connected to snack bar database")})  
 
 module.exports = connection
