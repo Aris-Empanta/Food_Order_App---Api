@@ -1,33 +1,51 @@
 const db = require('../database/db')
 const model = require("../models/chatModel")
+const sortByDate = require("../functions/functions").sortByDate
 
 //All the controllers for the chat section's CRUD operation
 module.exports = {
     onlyCustomersMessages: (req, res) => {
 
-        model.onlyCustomersMessages(db, (err, rows) => {
-                                                    res.send(rows)
-                                                })
+        const sendData = (err, rows) => {
+                                            //We sort the messages in descending date order
+                                            sortByDate(rows)  
+                                            res.send(rows)
+                                        }
+
+        model.onlyCustomersMessages(db, sendData )
     },
     getMessages : (req, res) => {
+        
+        const sendData  = (err, rows) => {
 
-        model.getMessages( db, (err, rows) => {
-                                                res.send(rows)
-                                              })        
+            //We sort the messages in descending date order
+            sortByDate(rows)                                          
+            //We send the messages in ascending date order
+            res.send(rows.reverse())
+          }
+
+        model.getMessages( db, sendData )        
     },
     getCustomersNames : (req, res) => {
+
+        const sendData  = (err, rows) => {
+
+            //We sort the messages in descending date order
+            sortByDate(rows)                                 
+            res.send(rows)
+          }
  
-        model.getCustomersNames( db, (err, rows) =>  {
-                                                      if(err)console.log(err)
-                                                      res.send(rows)
-                                                     })       
+        model.getCustomersNames( db, sendData )       
     },
     getLatestMessage: (req, res) => { 
         
-        model.getLatestMessage(db, (err, rows) =>  {
-                                                    if(err)console.log(err)
-                                                    res.send(rows)
-                                                   })
+        const sendData = (err, rows) => {
+            //We sort the messages in descending date order
+            sortByDate(rows)  
+            res.send(rows)
+        }
+
+        model.getLatestMessage(db, sendData)
     },
     getUnread : (req, res) => {
 

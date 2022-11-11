@@ -24,7 +24,8 @@ module.exports = {
             let dailyIncome = dailyOrders.map(item => item.totalPrice)
                                          .reduce((previous, current) => previous + current, 0)
            
-            res.send({ dailyIncome: dailyIncome })
+            res.send({ dailyIncome: dailyIncome,
+                       currency: rows[0].currency })
         }
         //We send the daily income to the requesting parties
         model.dailyIncome(db, getDailyIncome ) 
@@ -61,6 +62,20 @@ module.exports = {
         }
 
         model.weeklyIncome(db, incomePerWeekDays ) 
+    }, 
+    totalOrders: (req, res) => {
+
+        model.totalOrders(db, (err, rows) => {
+
+            res.send({ ordersAmount: rows.length })
+        })
+    },
+    totalCustomers: (req, res) => {
+
+        model.totalCustomers(db, (err, rows) => {
+
+            res.send({ customersAmount: rows.length })
+        })
     },
     totalRevenue: (req, res) => {
 
@@ -80,7 +95,7 @@ module.exports = {
         model.trendingOrders(db, (err, rows) => {
 
             //Getting the five most popular dishes
-            let fiveMostPopular = rows.slice(0, 5)
+            let fiveMostPopular = rows.slice(0, 4)
 
             res.send(fiveMostPopular)
         })

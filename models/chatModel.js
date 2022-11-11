@@ -6,15 +6,13 @@ module.exports = {
                                         dateReceived,
                                         Read_status as checkedStatus 
                                  FROM chat_messages
-                                 WHERE Sender <> 'admin' 
-                                 ORDER BY dateReceived DESC`
+                                 WHERE Sender <> 'admin'`
 
                     sql.query( query, callback )
     },
     getMessages: ( sql, callback ) => {
 
-                    let query = `SELECT * FROM chat_messages 
-                                 ORDER BY dateReceived`
+                    let query = `SELECT * FROM chat_messages`
 
                     sql.query( query, callback )
                 },
@@ -34,15 +32,9 @@ module.exports = {
 
                     let query = `SELECT Customer, 
                                         Message, 
-                                        dateReceived    
-                                 FROM chat_messages
-                                 WHERE dateReceived in (
-                                    SELECT MAX(dateReceived)
+                                        MAX(dateReceived) as dateReceived                                
                                     FROM chat_messages
-                                    GROUP BY Customer                                    
-                                 )  
-                                 ORDER BY dateReceived DESC                           
-                                 `
+                                    GROUP BY Customer`
 
                     sql.query( query, callback )
                 },

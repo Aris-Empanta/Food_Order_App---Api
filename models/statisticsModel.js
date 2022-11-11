@@ -3,7 +3,7 @@ module.exports = {
 
         //We query only the columns needed to calculate the today's 
         //income.
-        let query = `SELECT orderId, totalPrice, date
+        let query = `SELECT orderId, totalPrice, date, currency
                      FROM orders
                      GROUP BY orderId`
 
@@ -14,6 +14,21 @@ module.exports = {
         let query = `SELECT orderId, totalPrice, date
                      FROM orders
                      GROUP BY orderId`
+
+        sql.query(query, callback) 
+    },
+    totalOrders: (sql, callback) => {
+        
+        let query = `SELECT * 
+                     FROM orders 
+                     GROUP BY orderId`
+
+        sql.query(query, callback) 
+    },
+    totalCustomers: (sql, callback) => {
+        
+        let query = `SELECT * 
+                     FROM customers`
 
         sql.query(query, callback) 
     },

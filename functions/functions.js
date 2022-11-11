@@ -99,5 +99,42 @@ module.exports = {
         }
 
         return dayName
-    }
+    },
+    sortByDate: (array) => {
+                //The function below sorts an array of objects by date,
+                //if the date's value is in format "dd/mm/yyy hh:mm"   
+
+                //First, we convert dates to a format that can be sorted 
+                //as a string by removing "/", ":" and spaces
+                array.map( item => {
+                        item.dateReceived = item.dateReceived.split(":").join('')
+                                                            .split(" ")
+                        item.dateReceived[0] = item.dateReceived[0].split("/").reverse().join("")
+                        item.dateReceived = item.dateReceived.join('')
+                        
+                        return item
+                    }) 
+
+                //We sort the array by date    
+                array.sort( (a, b) => {
+                    let first = a.dateReceived
+                    let second = b.dateReceived
+                    return first > second ? -1 : 1
+                })  
+                
+                //We convert the dates to their initial format "dd/mm/yyyy hh:mm"
+                array.map( item => {
+
+                    let year = item.dateReceived.slice(0,4)
+                    let month = item.dateReceived.slice(4,6)
+                    let day = item.dateReceived.slice(6,8)
+                    let hours = item.dateReceived.slice(8,10)
+                    let minutes = item.dateReceived.slice(10)
+
+                    item.dateReceived = day + "/" + month + "/" + year
+                                        + " " + hours + ":" + minutes 
+                                        return item
+
+                })
+            }
 }
