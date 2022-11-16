@@ -3,7 +3,7 @@ const model = require("../models/ordersModel")
 const createInvoice = require("../functions/invoiceGenerator").createInvoice
 const currentDate = require("../functions/functions").currentDate
 const invoiceName = require("../functions/functions").invoiceName
- 
+const serverHost = require("../variables/variables").serverHost 
 
 module.exports = {
     distinctOrders: (req, res) => {
@@ -34,7 +34,7 @@ module.exports = {
         let invoice = invoiceName(order[0].orderId) 
 
         //The invoice url to be saved to the database
-        let invoiceUrl = "http://localhost:5000/orders/invoices/" + invoice
+        let invoiceUrl = serverHost + "orders/invoices/" + invoice
 
         //The method to create the invoice for the customer
         createInvoice(order, order[0].customerName, order[0].address, invoice, orderTotalPrice)

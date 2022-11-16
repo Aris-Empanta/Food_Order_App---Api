@@ -2,6 +2,7 @@ const db = require('../database/db')
 const model = require("../models/productsModel")
 const fs = require("fs")
 const currentDate = require("../functions/functions").currentDate
+const serverHost = require("../variables/variables").serverHost
 
 //All the controllers for the product's CRUD operation
 module.exports = {
@@ -58,7 +59,7 @@ module.exports = {
       let currency = 'EUR'
       let price = req.body.price
       let description = req.body.description
-      let image = "http://localhost:5000/products/images/" + req.body.imageName    
+      let image = serverHost + "products/images/" + req.body.imageName    
       let date = currentDate()
 
       let productAttributes = [ category, name, currency, price,
@@ -72,16 +73,17 @@ module.exports = {
     },
     changeImage :  (req, res) => {
 
-      let newImage = "http://localhost:5000/products/images/" + req.file.filename
+      let newImage = serverHost + "products/images/" + req.file.filename
       let id = req.params.id
-      let date = functions.currentDate()
+      let date = currentDate()
       let oldImage
       let newImageAttributes = [date, newImage, id]
-      
+      console.log("image")
       model.deleteOldImage( db, id, (err, rows) => {
                                       if (err) throw err;
+                                      let imageName = serverHost + "products/images/"
                                       oldImage = rows[0]["Image_name"]
-                                                 .split("http://localhost:5000/products/images/")
+                                                 .split( imageName )
                                       
                                       fs.unlink("uploads/" + oldImage[1], (err) => { 
                                                                                       if (err) throw err; 
@@ -90,7 +92,8 @@ module.exports = {
                                     })    
 
       model.updateImage( db, newImageAttributes, (err) =>  { 
-                                                              if(err) throw err; 
+                                                              if(err) throw err;
+                                                              res.send("server: image updated")
                                                             } 
                                                           )              
     },
@@ -103,6 +106,7 @@ module.exports = {
       let currency = req.body.currency
       let description = req.body.description  
       let attributes = [date, name, price, currency, description, id ]
+      console.log(attributes)
       
       model.editProduct( db, attributes, (err, result) => {
                                                             if (err) throw err
@@ -116,12 +120,15 @@ module.exports = {
       
       model.deleteProductImage( db, id, (err, rows) => {
                                                          if (err) throw err;
+                                                         
+                                                            let imageName = serverHost + "products/images/"
                                                             image = rows[0]["Image_name"]
-                                                                    .split("http://localhost:5000/products/images/")
+                                                                    .split( imageName )
                                                                     
                                                             fs.unlink("uploads/" + image[1], (err) => {
                                                                   if (err) throw err;
                                                                 })
+                                                            res.send("server: image deleted")
                                                         })
       
       model.deleteProduct( db, id, (err, rows) => {

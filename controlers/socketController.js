@@ -1,6 +1,7 @@
 const axios = require('axios');
 const model = require('../models/socketModel')
 const functions = require("../functions/functions")
+const serverHost = require("../variables/variables").serverHost
 
 module.exports = {
     saveMessage: (db, name, sender, message, date) => {
@@ -20,7 +21,7 @@ module.exports = {
     markAsRead: (db, sender) => model.markAsRead(db, sender) ,
     markAsChecked: (db, id) => model.markAsChecked(db, id), 
     manageOrders: (data, io) => {                                 
-                                 axios.get("http://localhost:5000/orders/latest-order-id")
+                                 axios.get(serverHost + "orders/latest-order-id")
                                       .then((res) => {
                                                       const latestId = res.data.latestId
                                                       let newId
@@ -35,7 +36,7 @@ module.exports = {
                                                                                         })
 
                                                       //We send the order's details to the database
-                                                      axios.post("http://localhost:5000/orders/new-order", finalOrder)
+                                                      axios.post(serverHost + "orders/new-order", finalOrder)
                                                            //Send the order to the admin in real-time as push notification
                                                            .then( io.emit('new order'))
                                                            .catch(err => console.log(err))                               
