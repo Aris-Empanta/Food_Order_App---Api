@@ -8,7 +8,7 @@ const io = require('socket.io')(server, {
                                 origin: "*",
                                 methods: ["GET", "POST"],
                                 }
-                            })
+                            }) 
 const port = process.env.PORT || 5000
 const cors = require("cors")
 const sockets = require("./socket_io/socket_io")(io)
