@@ -23,8 +23,7 @@ module.exports = {
                                         MAX(dateReceived) as dateReceived, 
                                         SUM(Read_status = 'unread') as Sum 
                                  FROM chat_messages                                 
-                                 GROUP BY Customer                            
-                                 ORDER BY dateReceived DESC` 
+                                 GROUP BY Customer` 
 
                     sql.query( query, callback )
                 },

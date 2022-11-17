@@ -5,8 +5,7 @@ module.exports = {
                             date as dateReceived,
                             checkedStatus 
                      FROM orders
-                     GROUP BY orderId
-                     ORDER BY dateReceived DESC`
+                     GROUP BY orderId`
 
         sql.query(query, callback)
     },

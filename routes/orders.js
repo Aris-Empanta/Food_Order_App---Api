@@ -8,7 +8,7 @@ const fs = require("fs")
 router.use('/invoices', express.static("invoices") )
 
 //The route to get all orders group with distinct orders id
-router.get("/", controler.distinctOrders)
+router.get("/", controler.distinctOrders) 
 
 //The route to get the id of the latest order made
 router.get("/latest-order-id", controler.latestOrderId)

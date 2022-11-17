@@ -32,7 +32,7 @@ module.exports = {
 
             //We sort the messages in descending date order
             sortByDate(rows)                                 
-            res.send(rows)
+            res.send(rows) 
           }
  
         model.getCustomersNames( db, sendData )       
@@ -86,7 +86,9 @@ module.exports = {
 
         for(let customer of customers) {
 
-            model.markAsUnread(db, customer, (err, rows) => { if (err) throw err;  })
+            model.markAsUnread(db, customer, (err, rows) => { if (err) throw err;  
+                                                              res.send("messages marked as unread!!")
+                                                            })
         }
     },
     deleteSelected: (req, res) => {
@@ -98,7 +100,9 @@ module.exports = {
         
         for(let customer of customers) {
 
-            model.deleteConversation(db, customer, (err, rows) => { if (err) throw err;  })
+            model.deleteConversation(db, customer, (err, rows) => { if (err) throw err;  
+                                                                        res.send("messages deleted!")
+                                                                    }) 
         }
     }
 }

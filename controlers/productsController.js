@@ -66,9 +66,8 @@ module.exports = {
                                 description, date, image, id ]
         
       model.addProduct( db, productAttributes, (err, rows) => {
-        if(err){
-          console.log(err)
-        } 
+        if(err) console.log(err)
+        res.send("Product added successfully!") 
       })    
     },
     changeImage :  (req, res) => {
@@ -78,7 +77,7 @@ module.exports = {
       let date = currentDate()
       let oldImage
       let newImageAttributes = [date, newImage, id]
-      console.log("image")
+      
       model.deleteOldImage( db, id, (err, rows) => {
                                       if (err) throw err;
                                       let imageName = serverHost + "products/images/"
