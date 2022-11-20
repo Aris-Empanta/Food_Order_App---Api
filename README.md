@@ -1,7 +1,5 @@
 ## Food Order App - Server 
 
-[link](##routes)
-
 &nbsp;&nbsp;&nbsp;&nbsp;This is the server used by the 
 [Food order app](https://courageous-frangipane-c90c9e.netlify.app/) and its
 [Admin Dashboard](https://6378372e9d407f764d34917b--subtle-nasturtium-5d32c7.netlify.app/).
@@ -58,3 +56,24 @@ mentioned below, depending the task you want to carry out.
 - **PUT** [/products/update-characteristics/:id](https://restaurant-server.arisdb.myipservers.gr/products/update-characteristics/:id) **:** The route to modify the attributes of the product having the id in params.
 
 - **DELETE** [/products//delete-product/:id](https://restaurant-server.arisdb.myipservers.gr/products/delete-product/:id) **:**  The route to delete the product with the id in params, and also delete its photo from the uploads folder.
+
+### Chat
+
+- **GET** [/chat-messages](https://restaurant-server.arisdb.myipservers.gr/chat-messages) **:** Gets all the chat messages exchanged by the customers and the admin, with all other existing info, sorted by date in descending order.
+
+- **GET** [/chat-messages/only-customers](https://restaurant-server.arisdb.myipservers.gr/chat-messages/only-customers) **:** Gets only the customers' messages to the admin, sorted by date in descending order.
+
+- **GET** [/chat-messages/customers](https://restaurant-server.arisdb.myipservers.gr/chat-messages/customers) **:** Gets all the names of the customers that sent chat message to the admin. Also the date of the last message sent, and the amount of the unread messages as "Sum".
+
+- **GET** [/chat-messages/unread-messages](https://restaurant-server.arisdb.myipservers.gr/chat-messages/unread-messages) **:** Gets the amount of all unread customers' messages.
+
+- **GET** [/chat-messages/latest-message](https://restaurant-server.arisdb.myipservers.gr/chat-messages/latest-message) **:** Gets the latest message sent by each customer, and the date it was received.
+
+- **POST** [/chat-messages](https://restaurant-server.arisdb.myipservers.gr/chat-messages) **:** The route to save the message and the sender's name to the database
+
+- **PUT** [/chat-messages/mark-as-unread](https://restaurant-server.arisdb.myipservers.gr/chat-messages/mark-as-unread) **:**  The route to modify the "Read_status" of a message/messages from "read" to "unread".
+
+- **DELETE** [/chat-messages/delete-conversation/:customer](https://restaurant-server.arisdb.myipservers.gr/chat-messages/delete-conversation/:customer) **:**  Deletes the entire conversation with the admin and the customer in params.
+
+- **DELETE** [/chat-messages/delete-selected/:customer](https://restaurant-server.arisdb.myipservers.gr/chat-messages/delete-selected/:customer) **:**  Deletes the conversations with the customers mentioned in params. the customers are separated with a hyphen(-), and we convert the params string to an array of the customers mentioned.
+
