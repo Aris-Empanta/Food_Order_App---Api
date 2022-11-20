@@ -35,7 +35,7 @@ router.get("/by-id/:id", controller.getById)
 
 // The route to add new products
 router.post("/add/:id", upload.single("image"),  controller.addProduct )
-
+ 
 // The route to change a product's image
 router.post("/update-image/:id", upload.single("newImage"), controller.changeImage)
 
