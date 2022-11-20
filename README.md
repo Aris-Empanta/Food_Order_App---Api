@@ -1,25 +1,39 @@
-## Food Order App - Server 
+
+## Food Order App - Server
 
 &nbsp;&nbsp;&nbsp;&nbsp;This is the server used by the 
 [Food order app](https://courageous-frangipane-c90c9e.netlify.app/) and its
 [Admin Dashboard](https://6378372e9d407f764d34917b--subtle-nasturtium-5d32c7.netlify.app/).
-It contains all the backend logic for their CRUD operations, real time data transfer,
-mail sending etc.
+It contains all the backend logic needed for them.
 
-## Summary
+## Index
+
+&nbsp;&nbsp;&nbsp;&nbsp;[Intro](#intro)\
+&nbsp;&nbsp;&nbsp;&nbsp;[Technologies](#main-stack)\
+&nbsp;&nbsp;&nbsp;&nbsp;[Server's Host](#server-s-host)\
+&nbsp;&nbsp;&nbsp;&nbsp;[Routes](#routes)\
+&nbsp;&nbsp;&nbsp;&nbsp;[MVC pattern](#mvc-pattern)\
+&nbsp;&nbsp;&nbsp;&nbsp;[Socket.io events](socket-io-events)
+
+## Intro
 &nbsp;&nbsp;&nbsp;&nbsp;A monolithic Node js server built in MVC architectural pattern 
-(with views being the 2 React Apps mentioned above connected). It is connected
-to an online MySql database, which holds all the data for the apps needed. 
+. It is connected
+to an online MySql database, which holds all the data for the 2 apps mentioned above needed. 
 
-&nbsp;&nbsp;&nbsp;&nbsp;The server contains 7 different Routes. Each of it will be 
-described in further detail in the next sections. 
+## Technologies
 
-## Main Stack
-
+The main technologies used for this app are the following **:**
 - Node.js
 - Express
 - MySql
 - Socket.io
+
+## Server's Host
+
+&nbsp;&nbsp;&nbsp;&nbsp;This app is deployed on a Shared Hosting service. The url 
+of the host is held in [variable](https://github.com/Aris-Empanta/Food_Order_App---Server/blob/main/variables/variables.js)
+ and is used in several different files. So if we need to change host, we
+ just have to change the value of this variable!
 
 ## Routes
 &nbsp;&nbsp;&nbsp;&nbsp;In order to make an HTTP request,
@@ -27,7 +41,10 @@ you have to combine the server's host url (
 https://restaurant-server.arisdb.myipservers.gr/ ), with one of the paths
 mentioned below, depending the task you want to carry out.
 
-### Index
+&nbsp;&nbsp;&nbsp;&nbsp;Due to the large amount of different routes, I separated them in 7 different
+categories using the **express.Router()** method.
+
+### Quick links
 
 &nbsp;&nbsp;&nbsp;&nbsp;[Products](#products)\
 &nbsp;&nbsp;&nbsp;&nbsp;[Chat](#chat)\
@@ -76,4 +93,52 @@ mentioned below, depending the task you want to carry out.
 - **DELETE** [/chat-messages/delete-conversation/:customer](https://restaurant-server.arisdb.myipservers.gr/chat-messages/delete-conversation/:customer) **:**  Deletes the entire conversation with the admin and the customer in params.
 
 - **DELETE** [/chat-messages/delete-selected/:customer](https://restaurant-server.arisdb.myipservers.gr/chat-messages/delete-selected/:customer) **:**  Deletes the conversations with the customers mentioned in params. the customers are separated with a hyphen(-), and we convert the params string to an array of the customers mentioned.
+
+### Customers
+
+- **GET** [/customers/customers-info](https://restaurant-server.arisdb.myipservers.gr/customers/customers-info) **:** Gets all customers' information.
+
+- **GET** [/customers/customer-by-:email](https://restaurant-server.arisdb.myipservers.gr/customers/customer-by-johnnie.walker@gmail.com) **:**  Gets the info of the customer with the email in params.
+
+### Orders
+
+- **GET** [/orders](https://restaurant-server.arisdb.myipservers.gr/orders) **:** Gets the customer's name and the checked status of every single order made, sorted by date in descending order.
+
+- **GET** [/orders/latest-order-id](https://restaurant-server.arisdb.myipservers.gr/orders/latest-order-id) **:** Gets the id of the latest order made.
+
+- **GET** [/orders/latest-order-id-of-:mail](https://restaurant-server.arisdb.myipservers.gr/orders/latest-order-id-of-:mail) **:** Gets the link of the latest invoice that has been generated for the customer that has the email of the url params.
+
+- **GET** [/orders/orders-by-id](https://restaurant-server.arisdb.myipservers.gr/orders/orders-by-id) **:** This route sends 10 orders depending on the numbers of group chose by the user in req.body.
+
+- **GET** [/orders/orders-amount](https://restaurant-server.arisdb.myipservers.gr/orders/orders-amount) **:** Gets the total amount of orders divided by 10. It is useful in the Admin Dashboard in order to show every time maximum 10 orders.
+
+- **GET** [/orders/order-with-id-:id](https://restaurant-server.arisdb.myipservers.gr/orders/order-with-id-23) **:** Gets the order with the id requestes in route params.
+
+- **GET** [/orders/price-of-:id](https://restaurant-server.arisdb.myipservers.gr/orders/price-of-32) **:** Gets the total price of the order that has the same id as the one in route params.
+
+- **POST** [/orders/new-order](https://restaurant-server.arisdb.myipservers.gr/orders/new-order) **:** The route that a client can post a new order and save it to the database. It also generates instantly a pdf invoice with the use of the **PDFkit** library.
+
+- **GET** [/orders/unchecked-orders](https://restaurant-server.arisdb.myipservers.gr/orders/unchecked-orders) **:** Gets the amount of all the unchecked orders.
+
+### Nodemailer
+
+- **POST** [/email/customer-form](https://restaurant-server.arisdb.myipservers.gr/email/customer-form) **:** To this route, a client posts the contact form of the Food Order App. Then, with the of the **NodeMailer** module, the server sends the contact form data to my email.
+
+### Notifications
+
+- **GET** [/notifications/customers-info](https://restaurant-server.arisdb.myipservers.gr/notifications/customers-info) **:** Gets the Admin Dashboard notifications, by using Sql Union to the "chat messages" and "orders" tables, and then sort them by Date in descending order.
+
+### Statistics
+
+- **GET** [/statistics/daily-income](https://restaurant-server.arisdb.myipservers.gr/statistics/daily-income) **:** Gets the total daily income.
+
+- **GET** [/statistics/weekly-income](https://restaurant-server.arisdb.myipservers.gr/statistics/weekly-income) **:** Gets an array of the daily income of the last 7 days, and the name of each day.
+
+- **GET** [/statistics/total-orders-amount](https://restaurant-server.arisdb.myipservers.gr/statistics/total-orders-amount) **:** Gets the total amount of orders made so far.
+
+- **GET** [/statistics/total-customers-amount](https://restaurant-server.arisdb.myipservers.gr/statistics/total-customers-amount) **:** Gets the amount of the registered customers.
+
+- **GET** [/statistics/total-revenue](https://restaurant-server.arisdb.myipservers.gr/statistics/total-revenue) **:** Gets the total revenue so far.
+
+- **GET** [/statistics/trending-orders](https://restaurant-server.arisdb.myipservers.gr/statistics/trending-orders) **:** Gets the attributes of the 5 dishes that have been ordered the most times.
 

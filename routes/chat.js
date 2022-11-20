@@ -19,7 +19,7 @@ router.get('/unread-messages', controler.getUnread)
 router.get('/latest-message', controler.getLatestMessage)
 
 // The route to save messages and sender's name in the database
-router.post('/', controler.saveMessage)
+router.post('/', controler.saveMessage) 
 
 //The route to mark a message/messages as unread
 router.put('/mark-as-unread', controler.markAsUnread)
