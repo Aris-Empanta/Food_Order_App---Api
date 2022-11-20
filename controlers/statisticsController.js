@@ -3,7 +3,6 @@ const model = require("../models/statisticsModel")
 const currentDate = require("../functions/functions").onlyDate
 const daysAgo = require("../functions/functions").daysAgo
 const getDayName = require("../functions/functions").getDayName
-const axios = require("axios")
 
 module.exports = {
     dailyIncome: (req, res) => {
@@ -95,7 +94,7 @@ module.exports = {
         model.trendingOrders(db, (err, rows) => {
 
             //Getting the five most popular dishes
-            let fiveMostPopular = rows.slice(0, 4)
+            let fiveMostPopular = rows.slice(0, 4) 
 
             res.send(fiveMostPopular)
         })

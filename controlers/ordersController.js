@@ -4,7 +4,7 @@ const createInvoice = require("../functions/invoiceGenerator").createInvoice
 const currentDate = require("../functions/functions").currentDate
 const invoiceName = require("../functions/functions").invoiceName
 const serverHost = require("../variables/variables").serverHost 
-const sortByDate = require("../functions/functions").sortByDate
+
 
 module.exports = {
     distinctOrders: (req, res) => {

@@ -2,5 +2,5 @@
 //code. So that if we change host, instead of changing it in every single part, we change only
 //the variable below.
 module.exports = {
-    serverHost: "http://localhost:5000/"
+    serverHost: "https://restaurant-server.arisdb.myipservers.gr/"
 }
