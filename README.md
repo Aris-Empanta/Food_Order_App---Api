@@ -13,7 +13,7 @@ It contains all the backend logic needed for them.
 &nbsp;&nbsp;&nbsp;&nbsp;[Server Host](#server-host)\
 &nbsp;&nbsp;&nbsp;&nbsp;[Routes](#routes)\
 &nbsp;&nbsp;&nbsp;&nbsp;[MVC pattern](#mvc-pattern)\
-&nbsp;&nbsp;&nbsp;&nbsp;[Socket.io events](socket-io-events)
+&nbsp;&nbsp;&nbsp;&nbsp;[Socket.io](socket-io)
 
 ## Intro
 &nbsp;&nbsp;&nbsp;&nbsp;A monolithic Node js server built in MVC architectural pattern 
@@ -39,8 +39,7 @@ of the host is held in [variable](https://github.com/Aris-Empanta/Food_Order_App
 &nbsp;&nbsp;&nbsp;&nbsp;In order to make an HTTP request,
 you have to combine the server's host url (
 https://restaurant-server.arisdb.myipservers.gr/ ), with one of the paths
-mentioned below, depending the task you want to carry out.
-
+mentioned below, depending the task you want to carry out.\
 &nbsp;&nbsp;&nbsp;&nbsp;Due to the large amount of different routes, I separated them in 7 different
 categories using the **express.Router()** method.
 
@@ -157,3 +156,13 @@ the routes combined, can carry out the task required of each endpoint.\
 files, but instead the 2 React app who interact with this server, the 
 [Food order app](https://courageous-frangipane-c90c9e.netlify.app/) and the
 [Admin Dashboard](https://6378372e9d407f764d34917b--subtle-nasturtium-5d32c7.netlify.app/).
+
+## Socket.io
+
+&nbsp;&nbsp;&nbsp;&nbsp;In this app, for real time data transfer operations, we use the **Socket.io** library.
+It is needed for the orders transfer and the chat messages. In this [file](https://github.com/Aris-Empanta/Food_Order_App---Server/blob/main/socket_io/socket_io.js)
+ you can cleary see all the events that the server listens to and the handling of the payload.\
+ &nbsp;&nbsp;&nbsp;&nbsp;Once the server listens to an event, it might proccess
+ the receiving payload and emit a new event, or even save the payload 
+ directly to the database through its [controllers](https://github.com/Aris-Empanta/Food_Order_App---Server/blob/main/controlers/socketController.js)
+ and [models](https://github.com/Aris-Empanta/Food_Order_App---Server/blob/main/models/socketModel.js) .
