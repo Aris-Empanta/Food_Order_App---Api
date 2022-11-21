@@ -9,8 +9,8 @@ It contains all the backend logic needed for them.
 ## Index
 
 &nbsp;&nbsp;&nbsp;&nbsp;[Intro](#intro)\
-&nbsp;&nbsp;&nbsp;&nbsp;[Technologies](#main-stack)\
-&nbsp;&nbsp;&nbsp;&nbsp;[Server's Host](#server-s-host)\
+&nbsp;&nbsp;&nbsp;&nbsp;[Technologies](#technologies)\
+&nbsp;&nbsp;&nbsp;&nbsp;[Server Host](#server-host)\
 &nbsp;&nbsp;&nbsp;&nbsp;[Routes](#routes)\
 &nbsp;&nbsp;&nbsp;&nbsp;[MVC pattern](#mvc-pattern)\
 &nbsp;&nbsp;&nbsp;&nbsp;[Socket.io events](socket-io-events)
@@ -28,7 +28,7 @@ The main technologies used for this app are the following **:**
 - MySql
 - Socket.io
 
-## Server's Host
+## Server Host
 
 &nbsp;&nbsp;&nbsp;&nbsp;This app is deployed on a Shared Hosting service. The url 
 of the host is held in [variable](https://github.com/Aris-Empanta/Food_Order_App---Server/blob/main/variables/variables.js)
@@ -141,4 +141,3 @@ categories using the **express.Router()** method.
 - **GET** [/statistics/total-revenue](https://restaurant-server.arisdb.myipservers.gr/statistics/total-revenue) **:** Gets the total revenue so far.
 
 - **GET** [/statistics/trending-orders](https://restaurant-server.arisdb.myipservers.gr/statistics/trending-orders) **:** Gets the attributes of the 5 dishes that have been ordered the most times.
-
