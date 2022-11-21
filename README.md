@@ -141,3 +141,19 @@ categories using the **express.Router()** method.
 - **GET** [/statistics/total-revenue](https://restaurant-server.arisdb.myipservers.gr/statistics/total-revenue) **:** Gets the total revenue so far.
 
 - **GET** [/statistics/trending-orders](https://restaurant-server.arisdb.myipservers.gr/statistics/trending-orders) **:** Gets the attributes of the 5 dishes that have been ordered the most times.
+
+## MVC pattern
+
+&nbsp;&nbsp;&nbsp;&nbsp;This app has many lines of code, so I had to 
+split the routes into separate files. But those files where still quite
+big, so I made use of the ***MVC*** architectural pattern.\
+&nbsp;&nbsp;&nbsp;&nbsp;This pattern is consisted of controllers, models and views.
+The [controllers](https://github.com/Aris-Empanta/Food_Order_App---Server/tree/main/controlers) 
+contain the logic of each endpoint task, like functions, algorithms, etc.
+The [models](https://github.com/Aris-Empanta/Food_Order_App---Server/tree/main/models) 
+contain all the MySql queries needed to interact with the database. Those 2 with
+the routes combined, can carry out the task required of each endpoint.\
+&nbsp;&nbsp;&nbsp;&nbsp;The **views** for this app are not some template engine
+files, but instead the 2 React app who interact with this server, the 
+[Food order app](https://courageous-frangipane-c90c9e.netlify.app/) and the
+[Admin Dashboard](https://6378372e9d407f764d34917b--subtle-nasturtium-5d32c7.netlify.app/).
