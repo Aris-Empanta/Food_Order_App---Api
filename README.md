@@ -13,7 +13,7 @@ It contains all the backend logic needed for them.
 &nbsp;&nbsp;&nbsp;&nbsp;[Server Host](#server-host)\
 &nbsp;&nbsp;&nbsp;&nbsp;[Routes](#routes)\
 &nbsp;&nbsp;&nbsp;&nbsp;[MVC pattern](#mvc-pattern)\
-&nbsp;&nbsp;&nbsp;&nbsp;[Socket.io](socket-io)
+&nbsp;&nbsp;&nbsp;&nbsp;[Socket.io](socket.io)
 
 ## Intro
 &nbsp;&nbsp;&nbsp;&nbsp;A monolithic Node js server built in MVC architectural pattern 
