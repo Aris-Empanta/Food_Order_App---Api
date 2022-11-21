@@ -13,7 +13,7 @@ It contains all the backend logic needed for them.
 &nbsp;&nbsp;&nbsp;&nbsp;[Server Host](#server-host)\
 &nbsp;&nbsp;&nbsp;&nbsp;[Routes](#routes)\
 &nbsp;&nbsp;&nbsp;&nbsp;[MVC pattern](#mvc-pattern)\
-&nbsp;&nbsp;&nbsp;&nbsp;[Socket.io](socket.io)
+&nbsp;&nbsp;&nbsp;&nbsp;[Socket.IO](socketio)
 
 ## Intro
 &nbsp;&nbsp;&nbsp;&nbsp;A monolithic Node js server built in MVC architectural pattern 
@@ -157,7 +157,7 @@ files, but instead the 2 React app who interact with this server, the
 [Food order app](https://courageous-frangipane-c90c9e.netlify.app/) and the
 [Admin Dashboard](https://6378372e9d407f764d34917b--subtle-nasturtium-5d32c7.netlify.app/).
 
-## Socket.io
+## Socket.IO
 
 &nbsp;&nbsp;&nbsp;&nbsp;In this app, for real time data transfer operations, we use the **Socket.io** library.
 It is needed for the orders transfer and the chat messages. In this [file](https://github.com/Aris-Empanta/Food_Order_App---Server/blob/main/socket_io/socket_io.js)
