@@ -1,5 +1,5 @@
 
-## Food Order App - Server
+## Food Order App - Server 🍕 🍺
 
 &nbsp;&nbsp;&nbsp;&nbsp;This is the server used by the 
 [Food order app](https://courageous-frangipane-c90c9e.netlify.app/) and its
